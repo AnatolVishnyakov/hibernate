@@ -12,8 +12,6 @@ import java.util.Date;
 @Entity
 @Table(name = "student")
 public class Student {
-    @Id
-    @GeneratedValue
     private int id;
     @Basic(optional = false, fetch = FetchType.LAZY)
     @Type(type = "java.lang.String")
@@ -26,8 +24,10 @@ public class Student {
     private Date birthDate;
     @Enumerated(value = EnumType.STRING)
     private Days loveDaysWeek;
+    @Access(AccessType.FIELD)
     @CreationTimestamp
     private Date createTime;
+    @Access(AccessType.FIELD)
     @UpdateTimestamp
     private Date updateTime;
     @Formula("concat(lastName, ' ', firstName, ' ', secondName)")
@@ -59,6 +59,8 @@ public class Student {
         this.loveDaysWeek = loveDaysWeek;
     }
 
+    @Id
+    @GeneratedValue
     public int getId() {
         return id;
     }
