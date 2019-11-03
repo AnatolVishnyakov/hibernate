@@ -1,7 +1,9 @@
 package entities;
 
 import enums.Days;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,6 +20,10 @@ public class Student {
     private Date birthDate;
     @Enumerated(value = EnumType.STRING)
     private Days loveDaysWeek;
+    @CreationTimestamp
+    private Date createTime;
+    @UpdateTimestamp
+    private Date updateTime;
 
     public Student() {
     }
@@ -67,5 +73,13 @@ public class Student {
 
     public void setLoveDaysWeek(Days loveDaysWeek) {
         this.loveDaysWeek = loveDaysWeek;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
