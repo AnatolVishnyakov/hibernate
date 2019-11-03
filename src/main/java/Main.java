@@ -7,6 +7,11 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class Main {
+    private static void save(Session session, Student student) {
+        System.out.println("SAVE");
+        session.save(student);
+    }
+
     private static Student load(Session session, int id) {
         System.out.println("LOAD");
         return session.load(Student.class, id);
@@ -18,6 +23,7 @@ public class Main {
     }
 
     private static int lastStudentId(Session session) {
+        System.out.println("GET LAST student ID");
         return (int) session.createSQLQuery("select max(id) from student")
                 .getResultList()
                 .get(0);
@@ -30,9 +36,12 @@ public class Main {
         try (SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(new Student("Peter", Days.FRIDAY));
-            System.out.println(load(session, 1));
-            System.out.println(get(session, 1));
+//            session.save(new Student("Peter", Days.FRIDAY));
+//            System.out.println(load(session, 1));
+//            System.out.println(get(session, 1));
+            save(session, new Student("Ivan", "Ivanov", "Ivanovich", Days.FRIDAY));
+            Student student = get(session, lastStudentId(session));
+            System.out.println(student.getFullName());
             session.getTransaction().commit();
         }
     }

@@ -2,6 +2,7 @@ package entities;
 
 import enums.Days;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,7 +16,11 @@ public class Student {
     private int id;
     @Basic(optional = false, fetch = FetchType.LAZY)
     @Type(type = "java.lang.String")
-    private String name;
+    private String firstName;
+    @Type(type = "java.lang.String")
+    private String lastName;
+    @Type(type = "java.lang.String")
+    private String secondName;
     @Temporal(TemporalType.DATE)
     private Date birthDate;
     @Enumerated(value = EnumType.STRING)
@@ -24,22 +29,31 @@ public class Student {
     private Date createTime;
     @UpdateTimestamp
     private Date updateTime;
+    @Formula("concat(lastName, ' ', firstName, ' ', secondName)")
+    private String fullName;
 
     public Student() {
     }
 
-    public Student(String name) {
-        this.name = name;
+    public Student(String firstName) {
+        this.firstName = firstName;
     }
 
-    public Student(String name, Days loveDaysWeek) {
-        this(name);
+    public Student(String firstName, Days loveDaysWeek) {
+        this(firstName);
         this.loveDaysWeek = loveDaysWeek;
     }
 
-    public Student(String name, Date birthDate, Days loveDaysWeek) {
-        this.name = name;
+    public Student(String firstName, Date birthDate, Days loveDaysWeek) {
+        this.firstName = firstName;
         this.birthDate = birthDate;
+        this.loveDaysWeek = loveDaysWeek;
+    }
+
+    public Student(String firstName, String lastName, String secondName, Days loveDaysWeek) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.secondName = secondName;
         this.loveDaysWeek = loveDaysWeek;
     }
 
@@ -51,12 +65,12 @@ public class Student {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
 
     public Date getBirthDate() {
@@ -75,20 +89,34 @@ public class Student {
         this.loveDaysWeek = loveDaysWeek;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", createTime=" + createTime +
+                "fullName='" + fullName + '\'' +
                 '}';
     }
 }

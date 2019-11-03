@@ -3,7 +3,7 @@
         <id name="id" column="ID">
             <generator class="native"/>
         </id>
-        <property name="name" type="java.lang.String"/>
+        <property name="firstName" type="java.lang.String"/>
         <property name="birthDate" type="java.util.Date"/>
     </class>
 </hibernate-mapping>
