@@ -14,7 +14,7 @@ public class Main {
              Session session = sessionFactory.openSession()) {
 
             session.beginTransaction();
-            session.save(new Student("Tom"));
+            session.save(new Student("Mike"));
             session.getTransaction().commit();
         }
     }

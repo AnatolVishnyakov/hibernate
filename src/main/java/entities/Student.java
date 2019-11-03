@@ -1,14 +1,13 @@
 package entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Student {
     @Id
     @GeneratedValue
     private int id;
+    @Basic(optional = false, fetch = FetchType.LAZY)
     private String name;
 
     public Student() {
