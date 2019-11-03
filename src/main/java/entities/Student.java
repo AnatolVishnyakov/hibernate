@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "student")
 public class Student {
     @Id
     @GeneratedValue
