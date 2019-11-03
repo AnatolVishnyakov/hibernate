@@ -82,4 +82,13 @@ public class Student {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", createTime=" + createTime +
+                '}';
+    }
 }
