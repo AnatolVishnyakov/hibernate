@@ -1,8 +1,14 @@
 package entities;
 
-public class Student {
-    private int id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class Student {
+    @Id
+    @GeneratedValue
+    private int id;
     private String name;
 
     public Student() {
