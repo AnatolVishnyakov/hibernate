@@ -12,10 +12,9 @@ public class Student {
     @GeneratedValue
     private int id;
     @Basic(optional = false, fetch = FetchType.LAZY)
-    @Column(unique = true, nullable = false)
     @Type(type = "java.lang.String")
     private String name;
-    @Type(type = "java.util.Date")
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
     @Enumerated(value = EnumType.STRING)
     private Days loveDaysWeek;
@@ -29,6 +28,12 @@ public class Student {
 
     public Student(String name, Days loveDaysWeek) {
         this(name);
+        this.loveDaysWeek = loveDaysWeek;
+    }
+
+    public Student(String name, Date birthDate, Days loveDaysWeek) {
+        this.name = name;
+        this.birthDate = birthDate;
         this.loveDaysWeek = loveDaysWeek;
     }
 
