@@ -12,6 +12,8 @@ import java.util.Date;
 @Entity
 @Table(name = "student")
 public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     @Basic(optional = false, fetch = FetchType.LAZY)
     @Type(type = "java.lang.String")
@@ -59,8 +61,6 @@ public class Student {
         this.loveDaysWeek = loveDaysWeek;
     }
 
-    @Id
-    @GeneratedValue
     public int getId() {
         return id;
     }
