@@ -8,5 +8,6 @@
 
         <property name="show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
+        <mapping resource="entities/Student.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
