@@ -1,5 +1,6 @@
 package entities;
 
+import enums.Days;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -11,17 +12,24 @@ public class Student {
     @GeneratedValue
     private int id;
     @Basic(optional = false, fetch = FetchType.LAZY)
-    @Column(name = "StudentName", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     @Type(type = "java.lang.String")
     private String name;
     @Type(type = "java.util.Date")
     private Date birthDate;
+    @Enumerated(value = EnumType.STRING)
+    private Days loveDaysWeek;
 
     public Student() {
     }
 
     public Student(String name) {
         this.name = name;
+    }
+
+    public Student(String name, Days loveDaysWeek) {
+        this(name);
+        this.loveDaysWeek = loveDaysWeek;
     }
 
     public int getId() {
@@ -46,5 +54,13 @@ public class Student {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public Days getLoveDaysWeek() {
+        return loveDaysWeek;
+    }
+
+    public void setLoveDaysWeek(Days loveDaysWeek) {
+        this.loveDaysWeek = loveDaysWeek;
     }
 }

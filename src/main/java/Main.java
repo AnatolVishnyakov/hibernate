@@ -1,4 +1,5 @@
 import entities.Student;
+import enums.Days;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -14,7 +15,7 @@ public class Main {
              Session session = sessionFactory.openSession()) {
 
             session.beginTransaction();
-            session.save(new Student("Mike"));
+            session.save(new Student("Peter", Days.FRIDAY));
             session.getTransaction().commit();
         }
     }
