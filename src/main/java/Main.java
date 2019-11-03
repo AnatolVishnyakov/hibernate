@@ -1,3 +1,4 @@
+import entities.Address;
 import entities.Student;
 import enums.Days;
 import org.hibernate.Session;
@@ -29,6 +30,13 @@ public class Main {
                 .get(0);
     }
 
+    private static void testAddress(Session session) {
+        System.out.println("test Address save");
+        Student student = new Student("Ivan", "Ivanov", "Ivanovich", Days.FRIDAY);
+        student.setAddress(new Address("Moscow", "Lenina St.", "10"));
+        save(session, student);
+    }
+
     public static void main(String[] args) {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure().build();
@@ -39,9 +47,10 @@ public class Main {
 //            session.save(new Student("Peter", Days.FRIDAY));
 //            System.out.println(load(session, 1));
 //            System.out.println(get(session, 1));
-            save(session, new Student("Ivan", "Ivanov", "Ivanovich", Days.FRIDAY));
-            Student student = get(session, lastStudentId(session));
-            System.out.println(student.getFullName());
+            testAddress(session);
+//            Student student = get(session, lastStudentId(session));
+//            System.out.println(student.getFullName());
+//            System.out.println(student.getAddress());
             session.getTransaction().commit();
         }
     }

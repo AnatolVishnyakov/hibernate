@@ -31,6 +31,7 @@ public class Student {
     private Date updateTime;
     @Formula("concat(lastName, ' ', firstName, ' ', secondName)")
     private String fullName;
+    private Address address;
 
     public Student() {
     }
@@ -111,6 +112,14 @@ public class Student {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override
