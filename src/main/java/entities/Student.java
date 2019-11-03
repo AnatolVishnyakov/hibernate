@@ -7,7 +7,9 @@ public class Student {
     @Id
     @GeneratedValue
     private int id;
+
     @Basic(optional = false, fetch = FetchType.LAZY)
+    @Column(name = "StudentName", unique = true, nullable = false)
     private String name;
 
     public Student() {
