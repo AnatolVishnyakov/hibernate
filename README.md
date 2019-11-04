@@ -89,3 +89,8 @@
 
 Класс помечается как Embeddable, должен реализовывать Serializable, equals, hashcode, default constructor.
 Затем поле сущности помечается аннотацией EmbeddedId. 
+
+**Отношение между классами**
+-
+1. OneToOne (можно указывать в какой сущности создавать колонку через mappedBy, Cascade.PERSIST, ...)
+2.
