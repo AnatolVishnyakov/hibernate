@@ -108,3 +108,11 @@
 **Аннотация ElementCollection**
 
 Вложенные связи.
+
+**Сортировка**
+
+@OrderBy("marks") - сортировка уже полученных из БД значений
+@OrderColumn - добавляется колонка в БД
+@org.hibernate.annotations.OrderBy(clause = "marks DESC") - добавляется на уровне SQL
+@SortComparator(MarkComparator.class) - написать свой компаратор
+
