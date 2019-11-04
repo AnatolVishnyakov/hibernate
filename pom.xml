@@ -39,7 +39,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>MainStudent</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

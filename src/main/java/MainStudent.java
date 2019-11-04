@@ -7,7 +7,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class Main {
+public class MainStudent {
     private static void save(Session session, Student student) {
         System.out.println("SAVE");
         session.save(student);
