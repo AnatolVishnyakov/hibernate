@@ -12,9 +12,6 @@ import java.util.Date;
 @Entity
 @Table(name = "student")
 public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
     @Basic(optional = false, fetch = FetchType.LAZY)
     @Type(type = "java.lang.String")
     private String firstName;
@@ -34,6 +31,7 @@ public class Student {
     private Date updateTime;
     @Formula("concat(lastName, ' ', firstName, ' ', secondName)")
     private String fullName;
+    @EmbeddedId
     private Address address;
 
     public Student() {
@@ -59,14 +57,6 @@ public class Student {
         this.lastName = lastName;
         this.secondName = secondName;
         this.loveDaysWeek = loveDaysWeek;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFirstName() {

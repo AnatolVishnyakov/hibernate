@@ -1,15 +1,12 @@
 package entities;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
-import javax.persistence.Transient;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
-@Access(AccessType.FIELD)
-public class Address {
-    private transient String city;
-    @Transient
+public class Address implements Serializable {
+    private String city;
     private String street;
     private String house;
 
@@ -21,6 +18,21 @@ public class Address {
         this.city = city;
         this.street = street;
         this.house = house;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(city, address.city) &&
+                Objects.equals(street, address.street) &&
+                Objects.equals(house, address.house);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, street, house);
     }
 
     @Override
