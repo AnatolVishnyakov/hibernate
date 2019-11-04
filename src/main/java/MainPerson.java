@@ -17,10 +17,9 @@ public class MainPerson {
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
 
-            HomeAddress address = new HomeAddress("Lenin");
-            Person person = new Person("Mike", Arrays.asList(address));
-            address.setPerson(Arrays.asList(person));
-            session.persist(address);
+            HomeAddress[] addresses = {new HomeAddress("Lenin"), new HomeAddress("Lesina")};
+            Person person = new Person("Mike", Arrays.asList(addresses));
+//            session.persist(address);
             session.persist(person);
             session.getTransaction().commit();
         }

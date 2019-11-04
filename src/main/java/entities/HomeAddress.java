@@ -1,16 +1,10 @@
 package entities;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Embeddable;
 
-@Entity
+@Embeddable
 public class HomeAddress {
-    @Id
-    @GeneratedValue
-    private int id;
     private String street;
-    @ManyToMany
-    private List<Person> person;
 
     public HomeAddress(String street) {
         this.street = street;
@@ -19,7 +13,7 @@ public class HomeAddress {
     public HomeAddress() {
     }
 
-    public void setPerson(List<Person> person) {
-        this.person = person;
+    public String getStreet() {
+        return street;
     }
 }

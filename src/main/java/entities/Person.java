@@ -9,11 +9,7 @@ public class Person {
     @GeneratedValue
     private int id;
     private String name;
-    @ManyToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "personId"),
-            inverseJoinColumns = @JoinColumn(name = "homeId")
-    )
+    @ElementCollection
     private List<HomeAddress> address;
 
     public Person(String name, List<HomeAddress> address) {
