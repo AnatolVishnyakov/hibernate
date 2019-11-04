@@ -1,9 +1,10 @@
 package entities;
 
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Person {
@@ -11,20 +12,15 @@ public class Person {
     @GeneratedValue
     private int id;
     private String name;
-    @OneToOne(fetch = FetchType.LAZY)
-    @LazyToOne(LazyToOneOption.NO_PROXY)
-    private HomeAddress address;
+    @OneToMany
+    private List<HomeAddress> address;
 
-    public Person(String name, HomeAddress address) {
+    public Person(String name, List<HomeAddress> address) {
         this.name = name;
         this.address = address;
     }
 
     public Person() {
 
-    }
-
-    public void setAddress(HomeAddress address) {
-        this.address = address;
     }
 }

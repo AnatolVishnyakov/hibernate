@@ -3,7 +3,7 @@ package entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class HomeAddress {
@@ -11,7 +11,7 @@ public class HomeAddress {
     @GeneratedValue
     private int id;
     private String street;
-    @OneToOne(mappedBy = "address")
+    @ManyToOne
     private Person person;
 
     public HomeAddress(String street) {

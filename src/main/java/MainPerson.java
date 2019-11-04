@@ -6,6 +6,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.util.Arrays;
+
 public class MainPerson {
     public static void main(String[] args) {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -16,7 +18,7 @@ public class MainPerson {
             session.beginTransaction();
 
             HomeAddress address = new HomeAddress("Lenin");
-            Person person = new Person("Mike", address);
+            Person person = new Person("Mike", Arrays.asList(address));
             address.setPerson(person);
             session.persist(address);
             session.persist(person);
