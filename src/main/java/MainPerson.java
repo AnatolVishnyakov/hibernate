@@ -19,7 +19,7 @@ public class MainPerson {
 
             HomeAddress address = new HomeAddress("Lenin");
             Person person = new Person("Mike", Arrays.asList(address));
-            address.setPerson(person);
+            address.setPerson(Arrays.asList(person));
             session.persist(address);
             session.persist(person);
             session.getTransaction().commit();

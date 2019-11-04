@@ -1,9 +1,6 @@
 package entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -12,7 +9,7 @@ public class Person {
     @GeneratedValue
     private int id;
     private String name;
-    @OneToMany
+    @ManyToMany(mappedBy = "person")
     private List<HomeAddress> address;
 
     public Person(String name, List<HomeAddress> address) {

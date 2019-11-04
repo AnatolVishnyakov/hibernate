@@ -1,9 +1,7 @@
 package entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class HomeAddress {
@@ -11,8 +9,8 @@ public class HomeAddress {
     @GeneratedValue
     private int id;
     private String street;
-    @ManyToOne
-    private Person person;
+    @ManyToMany
+    private List<Person> person;
 
     public HomeAddress(String street) {
         this.street = street;
@@ -21,7 +19,7 @@ public class HomeAddress {
     public HomeAddress() {
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(List<Person> person) {
         this.person = person;
     }
 }

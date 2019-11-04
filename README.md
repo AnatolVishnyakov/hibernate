@@ -94,6 +94,7 @@
 -
 1. OneToOne (можно указывать в какой сущности создавать колонку через mappedBy, Cascade.PERSIST, ...)
 2. OneToMany/ManyToOne
+3. ManyToMany
 
 **Проблема N+1**
 
