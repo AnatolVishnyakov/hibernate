@@ -1,5 +1,8 @@
 package entities;
 
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,7 +11,8 @@ public class Person {
     @GeneratedValue
     private int id;
     private String name;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
     private HomeAddress address;
 
     public Person(String name, HomeAddress address) {
