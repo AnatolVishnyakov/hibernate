@@ -8,9 +8,9 @@
 
         <property name="show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
-<!--        <mapping resource="entities/Student.hbm.xml"/>-->
-<!--        <mapping class="entities.Student"/>-->
-        <mapping class="entities.Person"/>
+        <mapping resource="entities/Student.hbm.xml"/>
+        <mapping class="entities.Student"/>
+<!--        <mapping class="entities.Person"/>-->
 <!--        <mapping class="entities.HomeAddress"/>-->
     </session-factory>
 </hibernate-configuration>

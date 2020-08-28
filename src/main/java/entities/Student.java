@@ -12,6 +12,9 @@ import java.util.Date;
 @Entity
 @Table(name = "student")
 public class Student {
+    @Id
+    @GeneratedValue
+    private int id;
     @Basic(optional = false, fetch = FetchType.LAZY)
     @Type(type = "java.lang.String")
     private String firstName;
@@ -31,8 +34,8 @@ public class Student {
     private Date updateTime;
     @Formula("concat(lastName, ' ', firstName, ' ', secondName)")
     private String fullName;
-    @EmbeddedId
-    private Address address;
+//    @EmbeddedId
+//    private Address address;
 
     public Student() {
     }
@@ -107,18 +110,26 @@ public class Student {
         this.fullName = fullName;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+//    public Address getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(Address address) {
+//        this.address = address;
+//    }
 
     @Override
     public String toString() {
         return "Student{" +
                 "fullName='" + fullName + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
