@@ -23,6 +23,7 @@ public class MessageRepository {
                 .build();
 
         final MetadataSources metadataSources = new MetadataSources(serviceRegistry);
+        metadataSources.addAnnotatedClass(Message.class);
         SessionFactory sessionFactory = metadataSources
                 .buildMetadata()
                 .buildSessionFactory();
