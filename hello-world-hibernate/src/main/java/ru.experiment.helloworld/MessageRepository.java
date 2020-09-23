@@ -15,6 +15,7 @@ public class MessageRepository {
         serviceRegistryBuilder.applySetting("hibernate.connection.username", "admin");
         serviceRegistryBuilder.applySetting("hibernate.connection.password", "admin");
         serviceRegistryBuilder.applySetting("hibernate.format_sql", "true");
+        serviceRegistryBuilder.applySetting("hibernate.show_sql", "true");
         serviceRegistryBuilder.applySetting("hibernate.use_sql_comments", "true");
         serviceRegistryBuilder.applySetting("hibernate.current_session_context_class", "thread");
 
