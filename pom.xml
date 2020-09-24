@@ -8,6 +8,7 @@
         <module>hello-world-jpa</module>
         <module>jpwh-2e</module>
         <module>hello-world-hibernate</module>
+        <module>caveat-emptor</module>
     </modules>
 
     <packaging>pom</packaging>
