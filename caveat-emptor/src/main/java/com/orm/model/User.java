@@ -6,6 +6,8 @@ public class User implements Serializable {
     protected String username;
 
     public String getUsername() {
+        // TODO Проверить обращение по new String(username);
+        // TODO Проверить возврат новой коллекции .toArray(new String[])
         return username;
     }
 
