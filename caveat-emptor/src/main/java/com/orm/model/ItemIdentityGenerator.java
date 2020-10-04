@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
 public class ItemIdentityGenerator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "IDENTITY_GENERATOR_ID")
