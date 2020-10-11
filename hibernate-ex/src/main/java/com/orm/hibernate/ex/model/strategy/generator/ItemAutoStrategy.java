@@ -1,11 +1,13 @@
 package com.orm.hibernate.ex.model.strategy.generator;
 
+import com.orm.hibernate.ex.model.EntitySaver;
+
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class ItemAutoStrategy {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // using hibernate_sequence
+    @GeneratedValue(strategy = GenerationType.AUTO) // создает sequence hibernate_sequence
     protected Long id;
 
     public Long getId() {

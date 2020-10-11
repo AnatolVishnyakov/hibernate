@@ -1,4 +1,4 @@
-package com.orm.hibernate.ex.model.strategy.generator;
+package com.orm.hibernate.ex.model;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 import java.util.function.Consumer;
 
 public class EntitySaver {
-    public static <T> void save(Consumer<EntityManager> consumer) {
+    public static void save(Consumer<EntityManager> consumer) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("HibernateEx");
 
         EntityManager em = emf.createEntityManager();
