@@ -4,7 +4,7 @@ import com.orm.hibernate.ex.model.EntitySaver;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class ItemOverrideTypes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
@@ -12,8 +12,6 @@ public class ItemOverrideTypes {
     private String name;
     @Transient
     private boolean flag;
-    @Basic(optional = false)
-    private boolean test;
 
     public Long getId() {
         return id;
@@ -39,18 +37,9 @@ public class ItemOverrideTypes {
         this.flag = flag;
     }
 
-    public boolean isTest() {
-        return test;
-    }
-
-    public void setTest(boolean test) {
-        this.test = test;
-    }
-
     public static void main(String[] args) {
         EntitySaver.save(entityManager -> {
             final ItemOverrideTypes entity = new ItemOverrideTypes();
-            entity.setName("test");
             entityManager.persist(entity);
         });
     }
