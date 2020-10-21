@@ -5,7 +5,7 @@ import com.orm.hibernate.ex.model.EntitySaver;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
+//@Entity
 public class ItemEnums {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
