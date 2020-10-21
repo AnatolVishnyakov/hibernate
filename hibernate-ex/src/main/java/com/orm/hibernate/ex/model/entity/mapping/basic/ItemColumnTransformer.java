@@ -6,7 +6,7 @@ import org.hibernate.annotations.ColumnTransformer;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+//@Entity
 public class ItemColumnTransformer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
