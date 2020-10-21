@@ -1,25 +1,46 @@
 package com.orm.hibernate.ex.model.entity.mapping.basic;
 
 import com.orm.hibernate.ex.model.EntitySaver;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 
 //@Entity
-public class ItemFieldGenerated {
+public class ItemCreateTimestampField {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
     private Long id;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(insertable = false, updatable = false)
-    @ColumnDefault(value = "2020-10-21T20:48:39.478")
-    @org.hibernate.annotations.Generated(
-            GenerationTime.ALWAYS
-    )
+    @Column(updatable = false)
+    @CreationTimestamp
     private Date lastModified;
+    @Temporal(TemporalType.DATE)
+    @Column(updatable = false)
+    @CreationTimestamp
+    private Date createDate;
+    @Temporal(TemporalType.TIME)
+    @Column(updatable = false)
+    @CreationTimestamp
+    private Date createTime;
+    @Column
     private String name;
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public String getName() {
         return name;
@@ -39,9 +60,8 @@ public class ItemFieldGenerated {
 
     public static void main(String[] args) {
         EntitySaver.save(entityManager -> {
-            ItemFieldGenerated item = new ItemFieldGenerated();
+            ItemCreateTimestampField item = new ItemCreateTimestampField();
             item.setName("test");
-            item.setLastModified(new Date());
             entityManager.persist(item);
         });
     }
