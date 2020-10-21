@@ -6,7 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+//@Entity
 public class ItemUpdateTimestampField {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
