@@ -1,4 +1,6 @@
-package com.orm.hibernate.ex.model.entity.mapping.adapter.example;
+package com.orm.hibernate.ex.model.entity.mapping.adapter.converter;
+
+import com.orm.hibernate.ex.model.entity.mapping.adapter.example.monetary.MonetaryAmount;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

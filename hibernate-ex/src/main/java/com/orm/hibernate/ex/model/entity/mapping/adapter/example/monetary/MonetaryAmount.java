@@ -1,4 +1,4 @@
-package com.orm.hibernate.ex.model.entity.mapping.adapter.example;
+package com.orm.hibernate.ex.model.entity.mapping.adapter.example.monetary;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

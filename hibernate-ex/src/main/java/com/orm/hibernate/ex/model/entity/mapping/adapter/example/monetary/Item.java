@@ -1,12 +1,13 @@
-package com.orm.hibernate.ex.model.entity.mapping.adapter.example;
+package com.orm.hibernate.ex.model.entity.mapping.adapter.example.monetary;
 
 import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.entity.mapping.adapter.converter.MonetaryAmountConverter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-@Entity
+//@Entity
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
