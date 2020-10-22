@@ -5,7 +5,7 @@ import com.orm.hibernate.ex.model.EntitySaver;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+//@Entity
 @Table(name = "USERS")
 public class User implements Serializable {
     @Id
