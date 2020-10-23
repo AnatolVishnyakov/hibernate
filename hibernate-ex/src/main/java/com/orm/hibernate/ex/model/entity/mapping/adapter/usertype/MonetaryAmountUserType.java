@@ -3,12 +3,14 @@ package com.orm.hibernate.ex.model.entity.mapping.adapter.usertype;
 import com.orm.hibernate.ex.model.entity.mapping.adapter.example.monetary.MonetaryAmount;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
 import org.hibernate.usertype.DynamicParameterizedType;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -91,11 +93,31 @@ public class MonetaryAmountUserType implements CompositeUserType, DynamicParamet
 
     @Override
     public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner) throws HibernateException, SQLException {
-        return null;
+        final BigDecimal amount = rs.getBigDecimal(names[0]);
+        if (rs.wasNull()) {
+            return null;
+        }
+        final Currency currency = Currency.getInstance(rs.getString(names[1]));
+        return new MonetaryAmount(amount, currency);
     }
 
     @Override
     public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
+        if (value == null) {
+            st.setNull(index, StandardBasicTypes.BIG_DECIMAL.sqlType());
+            st.setNull(index + 1, StandardBasicTypes.CURRENCY.sqlType());
+        } else {
+            final MonetaryAmount amount = (MonetaryAmount) value;
+            MonetaryAmount dbAmount = convert(amount, convertTo);
+            st.setBigDecimal(index, dbAmount.getValue());
+            st.setString(index + 1, convertTo.getCurrencyCode());
+        }
+    }
 
+    private MonetaryAmount convert(MonetaryAmount amount, Currency toCurrency) {
+        return new MonetaryAmount(
+                amount.getValue().multiply(new BigDecimal(2)),
+                toCurrency
+        );
     }
 }
