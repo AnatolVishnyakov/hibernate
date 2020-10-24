@@ -33,22 +33,32 @@ public class MonetaryAmountUserType implements CompositeUserType, DynamicParamet
 
     @Override
     public String[] getPropertyNames() {
-        return new String[0];
+        return new String[]{
+                "value", "currency"
+        };
     }
 
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[0];
+        return new Type[]{
+                StandardBasicTypes.BIG_DECIMAL,
+                StandardBasicTypes.CURRENCY
+        };
     }
 
     @Override
     public Object getPropertyValue(Object component, int property) throws HibernateException {
-        return null;
+        final MonetaryAmount monetaryAmount = (MonetaryAmount) component;
+        if (property == 0) {
+            return monetaryAmount.getValue();
+        } else {
+            return monetaryAmount.getCurrency();
+        }
     }
 
     @Override
     public void setPropertyValue(Object component, int property, Object value) throws HibernateException {
-
+        throw new UnsupportedOperationException("MonetaryAmount is immutable");
     }
 
     @Override
