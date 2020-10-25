@@ -5,7 +5,7 @@ import com.orm.hibernate.ex.model.entity.mapping.adapter.converter.ZipCodeConver
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
