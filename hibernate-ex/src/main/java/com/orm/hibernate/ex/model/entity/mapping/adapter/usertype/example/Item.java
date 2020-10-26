@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-@Entity
+//@Entity
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
