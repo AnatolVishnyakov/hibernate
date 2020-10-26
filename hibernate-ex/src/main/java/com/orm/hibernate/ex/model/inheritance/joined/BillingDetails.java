@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 
 //@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "BD_TYPE", discriminatorType = DiscriminatorType.STRING)
 public abstract class BillingDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
