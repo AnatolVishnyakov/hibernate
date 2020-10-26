@@ -1,18 +1,15 @@
-package com.orm.hibernate.ex.model.inheritance.mappedsuperclass;
+package com.orm.hibernate.ex.model.inheritance.tableperclass;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 //@Entity
-@AttributeOverride(
-        name = "owner",
-        column = @Column(name = "CC_OWNER", nullable = false)
-)
 public class CreditCard extends BillingDetails {
     @NotNull
     private String cardNumber;
     @NotNull
     private String expMonth;
+
     @NotNull
     private String expYear;
 
@@ -38,5 +35,14 @@ public class CreditCard extends BillingDetails {
 
     public void setExpYear(String expYear) {
         this.expYear = expYear;
+    }
+
+    @Override
+    public String toString() {
+        return "CreditCard{" +
+                "cardNumber='" + cardNumber + '\'' +
+                ", expMonth='" + expMonth + '\'' +
+                ", expYear='" + expYear + '\'' +
+                '}';
     }
 }
