@@ -2,6 +2,7 @@ package com.orm.hibernate.ex.model.collections.bagofstrings;
 
 import com.orm.hibernate.ex.model.EntitySaver;
 import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -16,10 +17,11 @@ public class Item {
     @ElementCollection
     @CollectionTable(name = "IMAGE")
     @Column(name = "FILENAME")
+    @GenericGenerator(name = "ID_GENERATOR", strategy = "increment")
     @CollectionId(
             columns = {@Column(name = "IMAGE_ID")},
             type = @Type(type = "long"),
-            generator = "id_generator"
+            generator = "ID_GENERATOR"
     )
     private Collection<String> images = new ArrayList<>();
     @Column(name = "NAME")
