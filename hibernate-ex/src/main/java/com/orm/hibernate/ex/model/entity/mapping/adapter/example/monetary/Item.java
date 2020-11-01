@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.adapter.example.monetary;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import com.orm.hibernate.ex.model.entity.mapping.adapter.converter.MonetaryAmountConverter;
 
 import javax.persistence.*;
@@ -38,7 +38,7 @@ public class Item {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final Item item = new Item();
             final MonetaryAmount amount = new MonetaryAmount(new BigDecimal("11.23"), Currency.getInstance("USD"));
             item.setBuyNowPrice(amount);

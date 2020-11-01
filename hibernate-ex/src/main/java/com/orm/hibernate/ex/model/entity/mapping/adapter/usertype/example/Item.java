@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.adapter.usertype.example;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
 
@@ -46,7 +46,7 @@ public class Item {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final Item item = new Item();
             item.setBuyNowPrice(new MonetaryAmount(new BigDecimal("11.23"), Currency.getInstance("USD")));
             item.setInitialPrice(new MonetaryAmount(new BigDecimal("146.52"), Currency.getInstance("EUR1")));

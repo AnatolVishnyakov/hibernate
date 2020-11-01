@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.basic;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenerationTime;
 
@@ -38,7 +38,7 @@ public class ItemFieldGenerated {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             ItemFieldGenerated item = new ItemFieldGenerated();
             item.setName("test");
             item.setLastModified(new Date());

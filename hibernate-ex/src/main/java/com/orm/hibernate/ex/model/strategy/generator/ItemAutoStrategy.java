@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.strategy.generator;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 import javax.persistence.*;
 
@@ -15,7 +15,7 @@ public class ItemAutoStrategy {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(em -> {
+        QueryProcessor.process(em -> {
             ItemAutoStrategy itemIdGenerator = new ItemAutoStrategy();
             em.persist(itemIdGenerator);
         });

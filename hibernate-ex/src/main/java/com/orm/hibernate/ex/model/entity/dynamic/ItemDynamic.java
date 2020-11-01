@@ -1,10 +1,7 @@
 package com.orm.hibernate.ex.model.entity.dynamic;
 
-import com.orm.hibernate.ex.model.EntitySaver;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +20,7 @@ public class ItemDynamic {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             entityManager.persist(new ItemDynamic());
         });
     }

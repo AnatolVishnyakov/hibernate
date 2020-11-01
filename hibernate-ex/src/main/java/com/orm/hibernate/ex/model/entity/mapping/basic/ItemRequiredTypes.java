@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.basic;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -42,7 +42,7 @@ public class ItemRequiredTypes {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             ItemRequiredTypes item = new ItemRequiredTypes();
             item.setFirstName("first name");
             item.setSecondName("second name");

@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.basic;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -59,7 +59,7 @@ public class ItemCreateTimestampField {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             ItemCreateTimestampField item = new ItemCreateTimestampField();
             item.setName("test");
             entityManager.persist(item);

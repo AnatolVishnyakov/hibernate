@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.basic;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -43,7 +43,7 @@ public class ItemUpdateTimestampField {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final long count = entityManager
                     .createQuery("select count(i.id) from ItemUpdateTimestampField i", Long.class)
                     .getSingleResult();
@@ -54,7 +54,7 @@ public class ItemUpdateTimestampField {
             }
         });
 
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final ItemUpdateTimestampField item = entityManager
                     .createQuery("select i from ItemUpdateTimestampField i", ItemUpdateTimestampField.class)
                     .setMaxResults(1)

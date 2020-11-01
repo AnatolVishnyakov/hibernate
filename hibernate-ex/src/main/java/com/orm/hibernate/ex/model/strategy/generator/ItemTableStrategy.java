@@ -1,8 +1,7 @@
 package com.orm.hibernate.ex.model.strategy.generator;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +17,7 @@ public class ItemTableStrategy {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(em -> {
+        QueryProcessor.process(em -> {
             ItemTableStrategy itemIdGenerator = new ItemTableStrategy();
             em.persist(itemIdGenerator);
         });

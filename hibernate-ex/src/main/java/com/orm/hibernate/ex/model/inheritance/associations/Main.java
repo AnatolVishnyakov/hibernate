@@ -1,10 +1,10 @@
 package com.orm.hibernate.ex.model.inheritance.associations;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 public class Main {
     private static User createUserWithBillingDetails(User user, BillingDetails billingDetails) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             user.setDefaultBilling(billingDetails);
             entityManager.persist(billingDetails);
             entityManager.persist(user);
@@ -22,7 +22,7 @@ public class Main {
                 new CreditCard("0980988098", "04", "2021")
         );
 
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final User uBA = entityManager.find(User.class, userBA.getId());
             final BillingDetails defaultBillingBA = uBA.getDefaultBilling();
             System.out.println("BankAccountProxy instanceof BankAccount: " + (defaultBillingBA instanceof BankAccount)); // proxy
@@ -33,14 +33,14 @@ public class Main {
             System.out.println("CreditCardProxy instanceof CreditCard: " + (defaultBillingCC instanceof CreditCard)); // proxy
         });
 
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final User user = entityManager.find(User.class, userBA.getId());
             final BillingDetails bd = user.getDefaultBilling();
             final CreditCard creditCard = entityManager.getReference(CreditCard.class, bd.getId());
             System.out.println(bd != creditCard); // difference proxy
         });
 
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final User user = (User) entityManager.createQuery(
                     "select u from User u " +
                             "left join fetch u.defaultBilling " +

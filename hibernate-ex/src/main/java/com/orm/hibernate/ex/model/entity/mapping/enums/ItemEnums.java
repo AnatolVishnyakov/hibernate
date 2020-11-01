@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.enums;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -32,7 +32,7 @@ public class ItemEnums {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final ItemEnums item = new ItemEnums();
             item.setAuctionType(AuctionType.FIXED_BID);
             entityManager.persist(item);

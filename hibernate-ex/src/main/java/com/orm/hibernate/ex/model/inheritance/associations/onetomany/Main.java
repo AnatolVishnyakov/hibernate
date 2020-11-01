@@ -1,13 +1,13 @@
 package com.orm.hibernate.ex.model.inheritance.associations.onetomany;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     private static User createUserWithBillingDetails(User user, List<BillingDetails> billingDetails) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             billingDetails.forEach(bd -> {
                 bd.setUser(user);
                 entityManager.persist(bd);
@@ -28,7 +28,7 @@ public class Main {
                 )
         );
 
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final User uBA = entityManager.find(User.class, userBA.getId());
             System.out.println();
         });

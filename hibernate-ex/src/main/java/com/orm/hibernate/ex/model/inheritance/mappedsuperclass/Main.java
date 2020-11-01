@@ -1,10 +1,10 @@
 package com.orm.hibernate.ex.model.inheritance.mappedsuperclass;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 public class Main {
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             CreditCard creditCard = new CreditCard();
             creditCard.setCardNumber("12345");
             creditCard.setExpMonth("11");

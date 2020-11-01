@@ -1,9 +1,8 @@
 package com.orm.hibernate.ex.model.entity.mapping.basic;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import org.hibernate.annotations.Formula;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +32,7 @@ public class ItemFormula {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             ItemFormula item = new ItemFormula();
             entityManager.persist(item);
             System.out.println(item.getShortDescription());

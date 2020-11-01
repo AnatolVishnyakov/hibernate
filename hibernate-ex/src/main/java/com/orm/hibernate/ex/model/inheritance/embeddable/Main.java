@@ -1,13 +1,12 @@
 package com.orm.hibernate.ex.model.inheritance.embeddable;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
 //            final Item item = new Item();
 //            item.setDimensions(new Dimensions(new BigDecimal(1), new BigDecimal(2), new BigDecimal(3)));
 //            item.setWeight(new Weight(new BigDecimal(4)));

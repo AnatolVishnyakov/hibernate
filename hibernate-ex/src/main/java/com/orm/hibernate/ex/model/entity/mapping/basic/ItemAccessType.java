@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.basic;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 import javax.persistence.*;
 
@@ -21,7 +21,7 @@ public class ItemAccessType {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             ItemAccessType item = new ItemAccessType();
             item.setName("test");
             entityManager.persist(item);

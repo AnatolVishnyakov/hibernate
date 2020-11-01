@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.adapter.example.zipcode;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import com.orm.hibernate.ex.model.entity.mapping.adapter.converter.ZipCodeConverter;
 
 import javax.persistence.*;
@@ -25,7 +25,7 @@ public class Item {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
 //            final Item item = new Item();
 //            Address address = new Address();
 //            City city = new City("New York", "USA", new SwissZipCode("1234"));

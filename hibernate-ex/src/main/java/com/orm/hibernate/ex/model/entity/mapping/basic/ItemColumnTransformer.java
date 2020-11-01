@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.basic;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
@@ -43,7 +43,7 @@ public class ItemColumnTransformer {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
 //            ItemColumnTransformer item = new ItemColumnTransformer();
 //            entityManager.persist(item);
 //            item.setMetricWeight(4.0f);

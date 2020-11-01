@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.embeddad;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -37,7 +37,7 @@ public class User implements Serializable {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             User user = new User();
             Address address = new Address();
             address.setStreet("Test St.");

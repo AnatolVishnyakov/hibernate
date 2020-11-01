@@ -1,12 +1,12 @@
 package com.orm.hibernate.ex.model.inheritance.singletable.mixed;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 import javax.persistence.Query;
 
 public class Main {
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             CreditCard creditCard = new CreditCard();
             creditCard.setCardNumber("12345");
             creditCard.setExpMonth("11");

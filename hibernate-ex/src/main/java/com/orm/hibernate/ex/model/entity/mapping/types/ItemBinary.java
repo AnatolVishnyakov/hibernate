@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.entity.mapping.types;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import org.hibernate.Session;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.engine.jdbc.StreamUtils;
@@ -48,7 +48,7 @@ public class ItemBinary {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
 //            final ItemBinary item = new ItemBinary();
 //            item.setImage(BlobProxy.generateProxy("test".getBytes()));
 //            item.setDescription(ClobProxy.generateProxy("test"));
