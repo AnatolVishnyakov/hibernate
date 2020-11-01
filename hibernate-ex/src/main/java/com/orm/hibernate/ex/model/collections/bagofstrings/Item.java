@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.collections.bagofstrings;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -56,7 +56,7 @@ public class Item {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final Item item = new Item();
             item.getImages().add("File-1");
             item.setName("file test");

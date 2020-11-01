@@ -1,6 +1,6 @@
 package com.orm.hibernate.ex.model.collections.setofstrings;
 
-import com.orm.hibernate.ex.model.EntitySaver;
+import com.orm.hibernate.ex.model.QueryProcessor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -44,7 +44,7 @@ public class Item {
     }
 
     public static void main(String[] args) {
-        EntitySaver.save(entityManager -> {
+        QueryProcessor.process(entityManager -> {
             final Item item = new Item();
             item.getImages().add("File-1");
             item.setName("file test");
