@@ -1,4 +1,4 @@
-package com.orm.hibernate.ex.model.collections.listofstrings;
+package com.orm.hibernate.ex.model.collections.declare.listofstrings;
 
 import com.orm.hibernate.ex.model.QueryProcessor;
 

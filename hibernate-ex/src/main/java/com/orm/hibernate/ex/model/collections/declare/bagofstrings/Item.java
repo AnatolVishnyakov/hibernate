@@ -1,10 +1,13 @@
-package com.orm.hibernate.ex.model.collections.setofstrings;
+package com.orm.hibernate.ex.model.collections.declare.bagofstrings;
 
 import com.orm.hibernate.ex.model.QueryProcessor;
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
 
 //@Entity
 public class Item {
@@ -12,17 +15,26 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
     private Long id;
     @ElementCollection
-    @CollectionTable(name = "IMAGE", joinColumns = @JoinColumn(name = "ITEM_ID"))
+    @CollectionTable(name = "IMAGE")
     @Column(name = "FILENAME")
-    private Set<String> images = new HashSet<>();
+    @GenericGenerator(name = "ID_GENERATOR", strategy = "increment")
+    @CollectionId(
+            columns = {@Column(name = "IMAGE_ID")},
+            type = @Type(type = "long"),
+            generator = "ID_GENERATOR"
+    )
+    private Collection<String> images = new ArrayList<>();
     @Column(name = "NAME")
     private String name;
 
-    public Set<String> getImages() {
+    public Item() {
+    }
+
+    public Collection<String> getImages() {
         return images;
     }
 
-    public void setImages(Set<String> images) {
+    public void setImages(Collection<String> images) {
         this.images = images;
     }
 

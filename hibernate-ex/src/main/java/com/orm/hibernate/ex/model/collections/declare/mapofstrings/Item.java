@@ -1,4 +1,4 @@
-package com.orm.hibernate.ex.model.collections.mapofstrings;
+package com.orm.hibernate.ex.model.collections.declare.mapofstrings;
 
 import com.orm.hibernate.ex.model.QueryProcessor;
 
