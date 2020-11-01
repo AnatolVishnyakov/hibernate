@@ -1,4 +1,4 @@
-package com.orm.hibernate.ex.model.collections.sortedmapofstrings;
+package com.orm.hibernate.ex.model.collections.sorted.sortedmapofstrings;
 
 import java.util.Comparator;
 
