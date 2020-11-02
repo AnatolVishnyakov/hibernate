@@ -1,11 +1,14 @@
-package com.orm.hibernate.ex.model.collections.embeddable.setofembeddables;
+package com.orm.hibernate.ex.model.collections.embeddable.bagofembeddables;
 
 import com.orm.hibernate.ex.model.QueryProcessor;
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
-import java.util.Set;
 
 //@Entity
 public class Item {
@@ -16,12 +19,13 @@ public class Item {
     private String name;
     @ElementCollection
     @CollectionTable(name = "IMAGE")
-//    @AttributeOverride(
-//            name = "fileName",
-//            column = @Column(name = "FNAME", nullable = false)
-//    )
-    @OrderBy("fileName, width desc")
-    private Set<Image> images = new LinkedHashSet<>();
+    @GenericGenerator(name = "ID_GENERATOR", strategy = "increment")
+    @CollectionId(
+            columns = @Column(name = "IMAGE_ID"),
+            type = @Type(type = "long"),
+            generator = "ID_GENERATOR"
+    )
+    private Collection<Image> images = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -31,11 +35,11 @@ public class Item {
         this.name = name;
     }
 
-    public Set<Image> getImages() {
+    public Collection<Image> getImages() {
         return images;
     }
 
-    public void setImages(Set<Image> images) {
+    public void setImages(Collection<Image> images) {
         this.images = images;
     }
 
@@ -51,10 +55,10 @@ public class Item {
         final Item item = new Item();
         item.setName("Foo-" + new Random().nextInt(10_000));
         QueryProcessor.process(entityManager -> {
-            final Set<Image> images = item.getImages();
+            final Collection<Image> images = item.getImages();
+            images.add(new Image(null, "fileName-test-91", 30, 40));
             images.add(new Image("test-51", "fileName-test-51", 30, 40));
-            images.add(new Image("test-91", "fileName-test-91", 30, 40));
-            images.add(new Image("test-3", "fileName-test-3", 30, 40));
+            images.add(new Image(null, "fileName-test-3", 30, 40));
             images.add(new Image("test-49", "fileName-test-49", 30, 40));
             images.add(new Image("test-49", "fileName-test-49", 30, 40));
             entityManager.persist(item);
@@ -63,9 +67,7 @@ public class Item {
         QueryProcessor.process(entityManager -> {
             Item resItem = (Item) entityManager.createNativeQuery("select * from item where id = " + item.id, Item.class)
                     .getSingleResult();
-            resItem.getImages().forEach(image -> {
-                System.out.println(image + ", parent: " + image.getItem());
-            });
+            resItem.getImages().forEach(System.out::println);
         });
     }
 }
