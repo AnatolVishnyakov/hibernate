@@ -3,7 +3,7 @@ package com.orm.hibernate.ex.model.collections.embeddable.setofembeddables;
 import com.orm.hibernate.ex.model.QueryProcessor;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -16,11 +16,12 @@ public class Item {
     private String name;
     @ElementCollection
     @CollectionTable(name = "IMAGE")
-    @AttributeOverride(
-            name = "fileName",
-            column = @Column(name = "FNAME", nullable = false)
-    )
-    private Set<Image> images = new HashSet<>();
+//    @AttributeOverride(
+//            name = "fileName",
+//            column = @Column(name = "FNAME", nullable = false)
+//    )
+    @OrderBy("fileName, width desc")
+    private Set<Image> images = new LinkedHashSet<>();
 
     public String getName() {
         return name;
