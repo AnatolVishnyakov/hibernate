@@ -1,4 +1,4 @@
-package com.orm.hibernate.ex.model.associations.onetomany;
+package com.orm.hibernate.ex.model.associations.onetomany.onedirectional;
 
 import com.orm.hibernate.ex.model.QueryProcessor;
 
