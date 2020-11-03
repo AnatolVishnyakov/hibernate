@@ -1,4 +1,4 @@
-package com.orm.hibernate.ex.model.associations.onetomany.cascadepersist;
+package com.orm.hibernate.ex.model.associations.onetomany.cascade.persist;
 
 import com.orm.hibernate.ex.model.QueryProcessor;
 
