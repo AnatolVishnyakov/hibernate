@@ -13,8 +13,11 @@ public class User {
             fetch = FetchType.LAZY,
             optional = false // обязательно при ленивой загрузке
     )
-    // стратегия общего первичного ключа
-    // от класса User к классу Address
+    // Рекомендуется использовать, если
+    // одна из двух сущностей сохраняется
+    // раньше другой
+    // (стратегия общего первичного ключа
+    // от класса User к классу Address)
     @PrimaryKeyJoinColumn
     private Address shippingAddress;
     private String username;
