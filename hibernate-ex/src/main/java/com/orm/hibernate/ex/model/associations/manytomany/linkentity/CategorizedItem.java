@@ -80,4 +80,33 @@ public class CategorizedItem {
         category.getCategorizedItems().add(this);
         item.getCategorizedItems().add(this);
     }
+
+    public static void main(String[] args) {
+        QueryProcessor.process(entityManager -> {
+            Category someCategory = new Category("Some category");
+            Category otherCategory = new Category("Other category");
+            entityManager.persist(someCategory);
+            entityManager.persist(otherCategory);
+
+            Item someItem = new Item("Some item");
+            Item otherItem = new Item("Other item");
+            entityManager.persist(someItem);
+            entityManager.persist(otherItem);
+
+            CategorizedItem linkOne = new CategorizedItem(
+                    "John Doe", someCategory, someItem
+            );
+
+            CategorizedItem linkTwo = new CategorizedItem(
+                    "John Wick", someCategory, otherItem
+            );
+
+            CategorizedItem linkThree = new CategorizedItem(
+                    "John Smith", otherCategory, someItem
+            );
+            entityManager.persist(linkOne);
+            entityManager.persist(linkTwo);
+            entityManager.persist(linkThree);
+        });
+    }
 }

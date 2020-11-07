@@ -11,9 +11,19 @@ public class Category {
     private Long id;
     @OneToMany(mappedBy = "category")
     private Set<CategorizedItem> categorizedItems = new HashSet<>();
+    @Column
+    private final String name;
+
+    public Category(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Set<CategorizedItem> getCategorizedItems() {
