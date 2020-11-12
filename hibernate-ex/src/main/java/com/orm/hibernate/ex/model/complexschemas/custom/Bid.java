@@ -14,7 +14,8 @@ public class Bid {
     @ManyToOne
     @JoinColumn(
             name = "ITEM_ID",
-            nullable = false
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_ITEM_ID")
     )
     protected Item item;
 
