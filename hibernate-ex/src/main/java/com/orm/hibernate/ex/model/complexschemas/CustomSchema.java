@@ -10,11 +10,11 @@ public class CustomSchema extends AbstractAuxiliaryDatabaseObject {
 
     @Override
     public String[] sqlCreateStrings(Dialect dialect) {
-        return new String[]{"[CREATE statement]"};
+        return new String[]{"--[CREATE statement]"};
     }
 
     @Override
     public String[] sqlDropStrings(Dialect dialect) {
-        return new String[]{"[DROP statement]"};
+        return new String[]{"--[DROP statement]"};
     }
 }

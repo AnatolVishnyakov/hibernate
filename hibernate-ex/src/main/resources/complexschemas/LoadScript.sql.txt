@@ -1,7 +1,3 @@
 alter table BID
   add constraint AUCTION_BID_TIME
-  check(
-    CREATEDON <= (
-      select i.AUCTIONEND from ITEM i where i.ID = ITEM_ID
-    )
-  );
+  check(CREATEDON >= CURRENT_DATE);

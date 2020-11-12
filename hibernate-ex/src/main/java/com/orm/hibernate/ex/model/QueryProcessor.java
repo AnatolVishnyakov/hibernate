@@ -34,4 +34,17 @@ public class QueryProcessor {
         em.close();
         return result;
     }
+
+    public static void processWithCustomSchema(Consumer<EntityManager> consumer) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("CustomSchemaPU");
+
+        EntityManager em = emf.createEntityManager();
+        final EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+        consumer.accept(em);
+
+        tx.commit();
+        em.close();
+    }
 }

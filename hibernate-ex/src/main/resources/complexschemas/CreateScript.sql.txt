@@ -1,3 +1,1 @@
-create domain if not exists
-  EMAIL_ADDRESS as varchar
-  check (position('@', value) > 1);
+create domain EMAIL_ADDRESS as varchar check (position('@' in value) > 1);

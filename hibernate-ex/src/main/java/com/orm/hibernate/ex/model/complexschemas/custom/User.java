@@ -10,8 +10,8 @@ public class User {
     private Long id;
     @Column(
             nullable = false,                       // ограничение столбца
-            unique = true,                          // таблицное ограничение
-            columnDefinition = "EMAIL_ADDRESS(255)" // ограничение домена
+            unique = true,                          // табличное ограничение
+            columnDefinition = "EMAIL_ADDRESS"      // ограничение домена
     )
     protected String email;
 

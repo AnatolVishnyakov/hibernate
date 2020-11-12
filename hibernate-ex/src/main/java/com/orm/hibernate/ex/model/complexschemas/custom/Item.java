@@ -4,8 +4,10 @@ import com.orm.hibernate.ex.model.QueryProcessor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 @Entity
@@ -72,7 +74,16 @@ public class Item {
 
     public static void main(String[] args) {
         QueryProcessor.processWithCustomSchema(entityManager -> {
+            final int id = new Random().nextInt(10_000);
 
+            final Item item = new Item("item-" + id, new Date(), new Date());
+            entityManager.persist(item);
+
+            final User user = new User("nickname-" + id, id + "@mail.com");
+            entityManager.persist(user);
+
+            final Bid bid = new Bid(new BigDecimal("1.0"), item);
+            entityManager.persist(bid);
         });
     }
 }

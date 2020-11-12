@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <hibernate-mapping xmlns="http://www.hibernate.org/xsd/orm/hbm">
 
-    <database-object>
-        <create>
-            CREATE ...
-        </create>
-        <drop>
-            DROP ...
-        </drop>
-        <dialect-scope name="org.hibernate.dialect.H2Dialect"/>
-        <dialect-scope name="org.hibernate.dialect.PostgreSQLDialect"/>
-    </database-object>
+    <!--  1 Способ генерации схемы  -->
+<!--    <database-object>-->
+<!--        <create>-->
+<!--            CREATE ...-->
+<!--        </create>-->
+<!--        <drop>-->
+<!--            DROP ...-->
+<!--        </drop>-->
+<!--        <dialect-scope name="org.hibernate.dialect.PostgreSQLDialect"/>-->
+<!--    </database-object>-->
 
+    <!--  2 Способ генерации схемы  -->
     <database-object>
         <definition class="com.orm.hibernate.ex.model.complexschemas.CustomSchema"/>
-        <dialect-scope name="org.hibernate.dialect.H2Dialect"/>
         <dialect-scope name="org.hibernate.dialect.PostgreSQLDialect"/>
     </database-object>
 
