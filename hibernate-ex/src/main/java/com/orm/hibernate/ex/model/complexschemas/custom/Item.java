@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-@Entity
+//@Entity
 @Check(constraints = "AUCTIONSTART < AUCTIONEND")
 public class Item {
     @Id

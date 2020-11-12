@@ -2,7 +2,7 @@ package com.orm.hibernate.ex.model.complexschemas.custom;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Table(
         name = "USERS",
         // Если уникальность распространяется
@@ -10,7 +10,17 @@ import javax.persistence.*;
         uniqueConstraints = @UniqueConstraint(
                 name = "UNQ_USERNAME_EMAIL",
                 columnNames = {"USERNAME", "EMAIL"}
-        )
+        ),
+        indexes = {
+                @Index(
+                        name = "IDX_USERNAME",
+                        columnList = "USERNAME"
+                ),
+                @Index(
+                        name = "IDX_USERNAME_EMAIL",
+                        columnList = "USERNAME, EMAIL"
+                )
+        }
 )
 public class User {
     @Id
