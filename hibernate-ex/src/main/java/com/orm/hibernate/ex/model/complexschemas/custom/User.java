@@ -3,7 +3,15 @@ package com.orm.hibernate.ex.model.complexschemas.custom;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USERS")
+@Table(
+        name = "USERS",
+        // Если уникальность распространяется
+        // на несколько столбцов
+        uniqueConstraints = @UniqueConstraint(
+                name = "UNQ_USERNAME_EMAIL",
+                columnNames = {"USERNAME", "EMAIL"}
+        )
+)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
