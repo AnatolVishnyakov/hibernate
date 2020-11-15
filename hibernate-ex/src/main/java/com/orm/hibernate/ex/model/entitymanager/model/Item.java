@@ -104,4 +104,13 @@ public class Item {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", auctionEnd=" + auctionEnd +
+                '}';
+    }
 }
