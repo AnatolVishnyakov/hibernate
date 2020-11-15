@@ -18,6 +18,7 @@
                     value="update"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
+<!--            <property name="hibernate.entity_dirtiness_strategy" value="org.hibernate.CustomEntityDirtinessStrategy"/>-->
         </properties>
     </persistence-unit>
 

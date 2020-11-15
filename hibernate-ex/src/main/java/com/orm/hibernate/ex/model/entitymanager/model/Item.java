@@ -1,5 +1,7 @@
 package com.orm.hibernate.ex.model.entitymanager.model;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
@@ -10,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@DynamicUpdate
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
