@@ -3,6 +3,8 @@ package com.orm.hibernate.ex.model.entitymanager;
 import com.orm.hibernate.ex.model.QueryProcessor;
 import com.orm.hibernate.ex.model.entitymanager.model.Item;
 import org.hibernate.Hibernate;
+import org.hibernate.ReplicationMode;
+import org.hibernate.Session;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -188,7 +190,40 @@ public class SimpleTransaction {
         });
     }
 
+    private static void replicate() {
+        // 1
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ReplicateFromPU");
+//
+//        EntityManager em = emf.createEntityManager();
+//        final EntityTransaction tx = em.getTransaction();
+//        tx.begin();
+//
+//        for (int i = 0; i < 100; i++) {
+//            em.persist(new Item("test-item-" + i));
+//        }
+//
+//        tx.commit();
+//        em.close();
+//
+        EntityManagerFactory emfA = Persistence.createEntityManagerFactory("ReplicateFromPU");
+        final EntityManager emA = emfA.createEntityManager();
+
+        EntityManagerFactory emfB = Persistence.createEntityManagerFactory("ReplicateToPU");
+        final EntityManager emB = emfB.createEntityManager();
+        final EntityTransaction tx = emB.getTransaction();
+        tx.begin();
+
+        for (int i = 1; i <= 100; i++) {
+            final Item item = emA.find(Item.class, Integer.toUnsignedLong(i));
+            emB.unwrap(Session.class).replicate(item, ReplicationMode.EXCEPTION);
+        }
+
+        tx.commit();
+        emA.close();
+        emB.close();
+    }
+
     public static void main(String[] args) {
-        exampleChangeEntityInMemory();
+        replicate();
     }
 }

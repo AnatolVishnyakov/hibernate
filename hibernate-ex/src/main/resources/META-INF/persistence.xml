@@ -57,4 +57,34 @@
                       value="complexschemas/LoadScript.sql.txt"/>
         </properties>
     </persistence-unit>
+
+    <persistence-unit name="ReplicateFromPU">
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/ReplicateFrom"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="qq@zxc%123"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+<!--            <property name="hibernate.hbm2ddl.auto" value = "create"/>-->
+            <property name="hibernate.show_sql" value = "true"/>
+<!--            <property-->
+<!--                    name="javax.persistence.schema-generation.database.action"-->
+<!--                    value="create-drop"/>-->
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="ReplicateToPU">
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/ReplicateTo"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="qq@zxc%123"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.show_sql" value = "true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+        </properties>
+    </persistence-unit>
 </persistence>
