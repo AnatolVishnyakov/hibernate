@@ -223,7 +223,28 @@ public class SimpleTransaction {
         emB.close();
     }
 
+    private static void exampleFlushEntity() {
+        final Item createdItem = saveItemRandom();
+
+        QueryProcessor.process(entityManager -> {
+            final Item item = entityManager.find(Item.class, createdItem.getId());
+            item.setName("change-" + UUID.randomUUID().toString());
+            // Отключает выталкивание контекста перед
+            // выполнением запроса, поэтому данные в БД
+            // различаются с данными в памяти
+            entityManager.setFlushMode(FlushModeType.COMMIT);
+            // В любое время можно вызвать flush
+            // для синхронизации состояний БД и памяти
+//            entityManager.flush();
+
+            final String newName = (String) entityManager.createQuery("select i.name from Item i where i.id = :id")
+                    .setParameter("id", createdItem.getId())
+                    .getSingleResult();
+            System.out.println(item.getName().equals(newName));
+        });
+    }
+
     public static void main(String[] args) {
-        replicate();
+        exampleFlushEntity();
     }
 }
