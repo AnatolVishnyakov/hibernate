@@ -86,6 +86,13 @@ public class SimpleTransaction {
         }
     }
 
+    public static <T> T saveEntity(T entity) {
+        return QueryProcessor.process(entityManager -> {
+            entityManager.persist(entity);
+            return entity;
+        });
+    }
+
     public static void exampleEqualsReference() {
         QueryProcessor.process(entityManager -> {
             final Item itemA = entityManager.find(Item.class, 71L);
@@ -120,7 +127,23 @@ public class SimpleTransaction {
         });
     }
 
+    private static void exampleDraftState() {
+        Item newItem = new Item("item-" + new Random().nextInt(10_000));
+        final Item createdItem = saveEntity(newItem);
+
+        QueryProcessor.process(entityManager -> {
+            final Item item = entityManager.find(Item.class, createdItem.getId());
+            System.out.println("Saved Id: " + createdItem.getId());
+            printStateEntity(entityManager, item);
+            entityManager.remove(item);
+            printStateEntity(entityManager, item);
+
+            saveEntity(item);
+            System.out.println("Change Id: " + item.getId());
+        });
+    }
+
     public static void main(String[] args) {
-        exampleGetReferenceItem();
+        exampleDraftState();
     }
 }

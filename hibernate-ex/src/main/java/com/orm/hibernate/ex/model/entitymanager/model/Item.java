@@ -35,7 +35,10 @@ public class Item {
     protected BigDecimal buyNowPrice;
 
     public Item() {
-        System.out.println("Создается Item");
+    }
+
+    public Item(String name) {
+        this.name = name;
     }
 
     public String getName() {

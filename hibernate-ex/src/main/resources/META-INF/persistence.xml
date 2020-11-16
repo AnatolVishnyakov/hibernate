@@ -19,6 +19,8 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
 <!--            <property name="hibernate.entity_dirtiness_strategy" value="org.hibernate.CustomEntityDirtinessStrategy"/>-->
+            <!--  При операции em.remove(...) будет удален Id у сущности  -->
+            <property name="hibernate.use_identifier_rollback" value="true"/>
         </properties>
     </persistence-unit>
 
