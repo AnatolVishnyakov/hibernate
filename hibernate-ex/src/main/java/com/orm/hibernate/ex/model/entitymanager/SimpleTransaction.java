@@ -7,6 +7,10 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.lang.String.format;
 
@@ -39,10 +43,10 @@ public class SimpleTransaction {
     private static <T> void printStateEntity(EntityManager em, T entity) {
         final String message = format(
                 "\n\t Persist: \t%s \t|" +
-                "\n\t Detach: \t%s \t|" +
-                "\n\t Draft: \t%s \t|" +
-                "\n\t Loaded: \t%s \t|" +
-                "\n",
+                        "\n\t Detach: \t%s \t|" +
+                        "\n\t Draft: \t%s \t|" +
+                        "\n\t Loaded: \t%s \t|" +
+                        "\n",
                 isPersist(em, entity),
                 isDetach(em, entity),
                 isDraft(em, entity),
@@ -127,9 +131,13 @@ public class SimpleTransaction {
         });
     }
 
-    private static void exampleDraftState() {
+    private static Item saveItemRandom() {
         Item newItem = new Item("item-" + new Random().nextInt(10_000));
-        final Item createdItem = saveEntity(newItem);
+        return saveEntity(newItem);
+    }
+
+    private static void exampleDraftState() {
+        final Item createdItem = saveItemRandom();
 
         QueryProcessor.process(entityManager -> {
             final Item item = entityManager.find(Item.class, createdItem.getId());
@@ -143,7 +151,44 @@ public class SimpleTransaction {
         });
     }
 
+    // Полезно в случае, если хочется отменить
+    // сделанные изменения в памяти
+    private static void exampleChangeEntityInMemory() {
+        final Item createdItem = saveItemRandom();
+        System.out.println("Old Name: " + createdItem.getName());
+
+        AtomicBoolean changeItem = new AtomicBoolean(false);
+        final ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            System.out.println("Ожидаю команды изменения сущности");
+            while (true) {
+                if (changeItem.get()) {
+                    QueryProcessor.process(entityManager -> {
+                        final Item item = entityManager.find(Item.class, createdItem.getId());
+                        item.setName("Some Item-" + UUID.randomUUID().toString());
+                    });
+                    break;
+                }
+            }
+            System.out.println("Сущность изменена");
+        });
+        executorService.shutdown();
+
+        QueryProcessor.process(entityManager -> {
+            changeItem.set(true);
+            try {
+                Thread.sleep(2_000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            final Item item = entityManager.find(Item.class, createdItem.getId());
+            entityManager.refresh(item);
+            System.out.println("New Name: " + item.getName());
+        });
+    }
+
     public static void main(String[] args) {
-        exampleDraftState();
+        exampleChangeEntityInMemory();
     }
 }
