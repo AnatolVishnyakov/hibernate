@@ -328,7 +328,24 @@ public class SimpleTransaction {
         System.out.println(allUsers.size());
     }
 
+    private static void exampleDetachEntity() {
+        User savedUser = QueryProcessor.process(entityManager -> {
+            final User user = new User(UUID.randomUUID().toString());
+            Address address = new Address("Green St.", "42342", "New York");
+            user.setHomeAddress(address);
+            entityManager.persist(user);
+            return user;
+        });
+
+        QueryProcessor.process(entityManager -> {
+            final User user = entityManager.find(User.class, savedUser.getId());
+            entityManager.detach(user);
+
+            System.out.println(entityManager.contains(user));
+        });
+    }
+
     public static void main(String[] args) {
-        exampleEqualsEntities();
+        exampleDetachEntity();
     }
 }
