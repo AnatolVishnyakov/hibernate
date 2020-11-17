@@ -345,7 +345,26 @@ public class SimpleTransaction {
         });
     }
 
+    private static void exampleMergeEntity() {
+        User detachedUser = QueryProcessor.process(entityManager -> {
+            final User user = new User(UUID.randomUUID().toString());
+            Address address = new Address("Green St.", "42342", "New York");
+            user.setHomeAddress(address);
+            entityManager.persist(user);
+            return user;
+        });
+
+        detachedUser.setUsername("test-detached-user");
+
+        QueryProcessor.process(entityManager -> {
+            // ссылка detached после слияния
+            // не нужна, пользователь заперсистен
+            final User mergedUser = entityManager.merge(detachedUser);
+            mergedUser.setUsername("test-merged-user-" + UUID.randomUUID().toString());
+        });
+    }
+
     public static void main(String[] args) {
-        exampleDetachEntity();
+        exampleMergeEntity();
     }
 }

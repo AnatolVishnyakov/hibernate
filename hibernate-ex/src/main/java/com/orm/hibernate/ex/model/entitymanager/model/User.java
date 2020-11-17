@@ -1,5 +1,8 @@
 package com.orm.hibernate.ex.model.entitymanager.model;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -9,6 +12,8 @@ import java.util.Objects;
 @Table(name = "USERS",
         uniqueConstraints = @UniqueConstraint(columnNames = "USERNAME")
 )
+@DynamicInsert
+@DynamicUpdate
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
