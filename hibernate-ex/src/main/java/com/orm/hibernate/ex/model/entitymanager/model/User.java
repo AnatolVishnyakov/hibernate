@@ -3,14 +3,18 @@ package com.orm.hibernate.ex.model.entitymanager.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS",
+        uniqueConstraints = @UniqueConstraint(columnNames = "USERNAME")
+)
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
     private Long id;
-    protected String username;
+    @Column
+    protected String username; // Бизнес-ключ
     protected Address homeAddress;
     @Embedded // Можно не ставить
     @AttributeOverrides({
@@ -24,6 +28,10 @@ public class User implements Serializable {
     protected Address billingAddress;
 
     public User() {
+    }
+
+    public User(String username) {
+        this.username = username;
     }
 
     public Long getId() {
@@ -56,5 +64,22 @@ public class User implements Serializable {
 
     public BigDecimal calcShippingCosts(Address fromLocation) {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        if (!(other instanceof User)) return false;
+        User user = (User) other;
+        // обращение не напрямую к полю,
+        // а через геттер, ибо ссылка other
+        // может оказаться прокси-объектом
+        return this.getUsername().equals(user.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsername());
     }
 }

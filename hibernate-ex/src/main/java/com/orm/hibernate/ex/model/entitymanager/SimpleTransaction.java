@@ -1,7 +1,9 @@
 package com.orm.hibernate.ex.model.entitymanager;
 
 import com.orm.hibernate.ex.model.QueryProcessor;
+import com.orm.hibernate.ex.model.entitymanager.model.Address;
 import com.orm.hibernate.ex.model.entitymanager.model.Item;
+import com.orm.hibernate.ex.model.entitymanager.model.User;
 import org.hibernate.Hibernate;
 import org.hibernate.ReplicationMode;
 import org.hibernate.Session;
@@ -287,7 +289,46 @@ public class SimpleTransaction {
         System.out.println(allItems.size());
     }
 
+    private static void exampleEqualsEntities() {
+        final User createdUser = QueryProcessor.process(entityManager -> {
+            final User user = new User(UUID.randomUUID().toString());
+            Address address = new Address("Green St.", "42342", "New York");
+            user.setHomeAddress(address);
+            entityManager.persist(user);
+            return user;
+        });
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HibernateEx");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+        final User a = em.find(User.class, createdUser.getId());
+        final User b = em.find(User.class, createdUser.getId());
+        System.out.println(a == b);
+        System.out.println(a.equals(b));
+        System.out.println(a.getId().equals(b.getId()));
+
+        tx.commit();
+        em.close();
+
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+        tx.begin();
+
+        final User c = em.find(User.class, createdUser.getId());
+        System.out.println(a.getId() + " : " + a.hashCode());
+        System.out.println(b.getId() + " : " + b.hashCode());
+        System.out.println(c.getId() + " : " + c.hashCode());
+
+        final HashSet<Object> allUsers = new HashSet<>();
+        allUsers.add(a);
+        allUsers.add(b);
+        allUsers.add(c);
+        System.out.println(allUsers.size());
+    }
+
     public static void main(String[] args) {
-        exampleIdentityEntities();
+        exampleEqualsEntities();
     }
 }
