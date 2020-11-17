@@ -8,6 +8,7 @@ import org.hibernate.Session;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -244,7 +245,49 @@ public class SimpleTransaction {
         });
     }
 
+    private static void exampleIdentityEntities() {
+        final Item createdItem = saveItemRandom();
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HibernateEx");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        // один контекст
+        tx.begin();
+
+        final Item a = em.find(Item.class, createdItem.getId());
+        final Item b = em.find(Item.class, createdItem.getId());
+        System.out.println(a == b);
+        System.out.println(a.equals(b));
+        System.out.println(a.getId().equals(b.getId()));
+
+        tx.commit();
+        em.close();
+
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+        // другой контекст
+        tx.begin();
+
+        final Item c = em.find(Item.class, createdItem.getId());
+        System.out.println(a == c);
+        System.out.println(a.equals(c));
+        System.out.println(a.getId().equals(c.getId()));
+
+        tx.commit();
+        em.close();
+
+        final HashSet<Item> allItems = new HashSet<>();
+        allItems.add(a);
+        allItems.add(b);
+        allItems.add(c);
+
+        System.out.println(a.getId() + " : " + a.hashCode());
+        System.out.println(b.getId() + " : " + b.hashCode());
+        System.out.println(c.getId() + " : " + c.hashCode());
+        System.out.println(allItems.size());
+    }
+
     public static void main(String[] args) {
-        exampleFlushEntity();
+        exampleIdentityEntities();
     }
 }
