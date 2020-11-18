@@ -11,8 +11,8 @@
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="password"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value = "create-drop"/>
-            <property name="hibernate.show_sql" value = "true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property
                     name="javax.persistence.schema-generation.database.action"
                     value="update"/>
@@ -35,8 +35,8 @@
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="qq@zxc%123"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value = "create"/>
-            <property name="hibernate.show_sql" value = "true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property
                     name="javax.persistence.schema-generation.database.action"
                     value="create-drop"/>
@@ -65,11 +65,11 @@
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="qq@zxc%123"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-<!--            <property name="hibernate.hbm2ddl.auto" value = "create"/>-->
-            <property name="hibernate.show_sql" value = "true"/>
-<!--            <property-->
-<!--                    name="javax.persistence.schema-generation.database.action"-->
-<!--                    value="create-drop"/>-->
+            <!--            <property name="hibernate.hbm2ddl.auto" value = "create"/>-->
+            <property name="hibernate.show_sql" value="true"/>
+            <!--            <property-->
+            <!--                    name="javax.persistence.schema-generation.database.action"-->
+            <!--                    value="create-drop"/>-->
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
         </properties>
@@ -82,9 +82,30 @@
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="qq@zxc%123"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="hibernate.show_sql" value = "true"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="BitronixTransactionEx">
+        <jta-data-source>BitronixTx</jta-data-source>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/hibernatelearn"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property
+                    name="javax.persistence.schema-generation.database.action"
+                    value="update"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <!--            <property name="hibernate.entity_dirtiness_strategy" value="org.hibernate.CustomEntityDirtinessStrategy"/>-->
+            <!--  При операции em.remove(...) будет удален Id у сущности  -->
+            <property name="hibernate.use_identifier_rollback" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>
