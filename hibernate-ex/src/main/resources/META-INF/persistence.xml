@@ -89,7 +89,7 @@
     </persistence-unit>
 
     <persistence-unit name="BitronixTransactionEx">
-        <jta-data-source>BitronixTx</jta-data-source>
+        <jta-data-source>BitronixTransactionEx</jta-data-source>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/hibernatelearn"/>

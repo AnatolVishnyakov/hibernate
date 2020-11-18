@@ -21,14 +21,13 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class TransactionManager {
     private static final Logger logger = getLogger(TransactionManager.class);
-    private static final String DATASOURCE_NAME = "BitronixTx";
+    private static final String DATASOURCE_NAME = "BitronixTransactionEx";
     private final PoolingDataSource datasource;
     private final Context context;
 
     {
         Properties props = new Properties();
         props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "bitronix.tm.jndi.BitronixInitialContextFactory");
-//        props.setProperty(Context.PROVIDER_URL,"localhost:5432/hibernatelearn");
         context = new InitialContext(props);
     }
 

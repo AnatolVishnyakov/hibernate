@@ -16,6 +16,7 @@
 <!--        <module>hello-world-hibernate</module>-->
         <module>caveat-emptor</module>
         <module>hibernate-ex</module>
+        <module>hibernate-jta</module>
     </modules>
 
     <packaging>pom</packaging>
