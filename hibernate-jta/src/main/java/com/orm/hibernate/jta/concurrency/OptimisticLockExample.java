@@ -18,7 +18,7 @@ public class OptimisticLockExample {
         executorService.execute(() -> {
             QueryProcessor.process(entityManager -> {
                 final Item item1 = entityManager.find(Item.class, item.getId());
-                System.out.println(item1.getVersion());
+                System.out.println(item1.getLastUpdated());
                 item1.setName("thread-1");
             });
         });
@@ -26,7 +26,7 @@ public class OptimisticLockExample {
         executorService.execute(() -> {
             QueryProcessor.process(entityManager -> {
                 final Item item1 = entityManager.find(Item.class, item.getId());
-                System.out.println(item1.getVersion());
+                System.out.println(item1.getLastUpdated());
                 item1.setName("thread-2");
             });
         });

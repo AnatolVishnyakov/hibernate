@@ -18,8 +18,10 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
     private Long id;
+//    @Version
+//    protected long version;
     @Version
-    protected long version;
+    protected Date lastUpdated;
     @NotNull
     @Size(
             min = 2,
@@ -47,9 +49,9 @@ public class Item {
         return name;
     }
 
-    public long getVersion() {
-        return version;
-    }
+//    public long getVersion() {
+//        return version;
+//    }
 
     public Long getId() {
         return id;
@@ -89,6 +91,10 @@ public class Item {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
     }
 
     public void addBid(Bid bid) {
