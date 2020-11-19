@@ -1,6 +1,7 @@
 package com.orm.hibernate.jta.model;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OptimisticLock;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
@@ -27,6 +28,7 @@ public class Item {
     )
     protected String name;
     @Future
+    @OptimisticLock(excluded = true) // исключает из версионирования
     protected Date auctionEnd;
     @Transient
     protected Set<Bid> bids = new HashSet<>();
