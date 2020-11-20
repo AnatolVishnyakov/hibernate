@@ -2,6 +2,7 @@ package com.orm.hibernate.jta.model;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLock;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
@@ -12,14 +13,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@DynamicUpdate
+//@Entity
+//@DynamicUpdate
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
     private Long id;
 //    @Version
 //    protected long version;
+    @Type(type = "dbtimestamp")
     @Version
     protected Date lastUpdated;
     @NotNull
