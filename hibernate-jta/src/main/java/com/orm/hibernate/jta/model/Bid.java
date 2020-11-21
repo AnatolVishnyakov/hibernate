@@ -47,4 +47,12 @@ public class Bid {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "Bid{" +
+                "id=" + id +
+                ", amount=" + amount +
+                '}';
+    }
 }
