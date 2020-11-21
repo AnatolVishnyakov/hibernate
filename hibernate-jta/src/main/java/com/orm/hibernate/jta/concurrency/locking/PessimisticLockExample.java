@@ -16,11 +16,12 @@ public class PessimisticLockExample {
     private static Set<Category> createCategories() {
         return QueryProcessor.process(entityManager -> {
             Set<Category> categories = new HashSet<>();
-            for (int i = 0; i < 5; i++) {
-                final Category category = new Category(UUID.randomUUID().toString());
-                entityManager.persist(category);
-                categories.add(category);
 
+            final Category category = new Category(UUID.randomUUID().toString());
+            entityManager.persist(category);
+            categories.add(category);
+
+            for (int i = 0; i < 5; i++) {
                 final Item item = new Item(UUID.randomUUID().toString());
                 item.setCategory(category);
                 item.setBuyNowPrice(BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble()));
@@ -31,11 +32,9 @@ public class PessimisticLockExample {
     }
 
     public static void main(String[] args) {
-        final Set<Long> categories =
-                new HashSet<>(Arrays.asList(302L));
-//                createCategories()
-//                .stream().map(Category::getId)
-//                .collect(Collectors.toSet());
+        final Set<Long> categories = createCategories()
+                .stream().map(Category::getId)
+                .collect(Collectors.toSet());
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("HibernateEx");
 
@@ -43,11 +42,30 @@ public class PessimisticLockExample {
         final EntityTransaction tx = em.getTransaction();
         tx.begin();
 
+        final ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.execute(() -> QueryProcessor.process(entityManager -> {
+            final List<Item> items = entityManager.createQuery("SELECT i FROM Item i WHERE i.category.id = :categoryId", Item.class)
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                    .setHint("javax.persistence.lock.timeout", 5_000)
+                    .setParameter("categoryId", categories.toArray(new Long[0])[0])
+                    .getResultList();
+            try {
+                for (Item item : items) {
+                    item.setName("thread-change-" + item.getId());
+                }
+                Thread.sleep(5_000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+//                em.flush();
+        }));
+        executorService.shutdown();
+
         BigDecimal totalPrice = new BigDecimal(0);
         for (Long categoryId : categories) {
             final List<Item> items = em.createQuery("SELECT i FROM Item i WHERE i.category.id = :categoryId", Item.class)
-//                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-                    .setLockMode(LockModeType.PESSIMISTIC_READ)
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+//                    .setLockMode(LockModeType.PESSIMISTIC_READ)
                     // Время ожидания в случае взятия
                     // пессимистичного лока
                     .setHint("javax.persistence.lock.timeout", 5_000)
@@ -55,6 +73,7 @@ public class PessimisticLockExample {
                     .getResultList();
 
             for (Item item : items) {
+                item.setName("change-" + item.getId());
                 totalPrice = totalPrice.add(item.getBuyNowPrice());
             }
         }
