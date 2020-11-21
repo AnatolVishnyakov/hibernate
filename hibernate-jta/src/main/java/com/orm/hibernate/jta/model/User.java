@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-//@Entity
+@Entity
 @Table(name = "USERS",
         uniqueConstraints = @UniqueConstraint(columnNames = "USERNAME")
 )

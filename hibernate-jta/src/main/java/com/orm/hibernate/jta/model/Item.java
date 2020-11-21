@@ -13,14 +13,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-//@Entity
-//@DynamicUpdate
+@Entity
+@DynamicUpdate
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // создает таблицу hibernate_sequence
     private Long id;
-//    @Version
-//    protected long version;
+    @Version
+    protected long version;
     @Type(type = "dbtimestamp")
     @Version
     protected Date lastUpdated;
