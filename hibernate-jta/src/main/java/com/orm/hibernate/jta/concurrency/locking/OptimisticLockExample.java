@@ -1,4 +1,4 @@
-package com.orm.hibernate.jta.concurrency;
+package com.orm.hibernate.jta.concurrency.locking;
 
 import com.orm.hibernate.jta.model.Item;
 import com.orm.hibernate.jta.utils.QueryProcessor;
