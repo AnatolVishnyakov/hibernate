@@ -6,6 +6,10 @@
 
     <persistence-unit name="HibernateEx">
         <jta-data-source>myDS</jta-data-source>
+        <class>com.orm.hibernate.jta.model.Item</class>
+        <class>com.orm.hibernate.jta.model.Category</class>
+        <class>com.orm.hibernate.jta.model.Bid</class>
+        <class>com.orm.hibernate.jta.model.User</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/hibernatelearn"/>
