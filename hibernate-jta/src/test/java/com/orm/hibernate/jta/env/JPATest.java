@@ -11,6 +11,13 @@ public class JPATest extends TransactionManagerTest {
     public String[] hbmResources;
     public JPASetup JPA;
 
+    @BeforeEach
+    public void beforeClass() throws Exception {
+        if (persistenceUnitName == null || persistenceUnitName.isEmpty()) {
+            configurePersistenceUnit();
+        }
+    }
+
     public void configurePersistenceUnit() throws Exception {
         configurePersistenceUnit(null);
     }
