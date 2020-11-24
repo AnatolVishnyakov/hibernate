@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class NonTransactional extends JPATest {
     private Item createdItem;
@@ -58,6 +59,64 @@ public class NonTransactional extends JPATest {
         em.refresh(item);
         assertEquals(item.getName(), "Original Name");
 
+        em.close();
+    }
+
+    @Test
+    void saveWhenNotSyncStateEntityManager() throws HeuristicRollbackException, RollbackException, HeuristicMixedException, SystemException, NotSupportedException {
+        final EntityManager em = JPA.createEntityManager();
+
+        final Item item = new Item("New Item");
+        em.persist(item);
+        assertNotNull(item.getId());
+
+        final UserTransaction tx = TM.getUserTransaction();
+        tx.begin();
+
+        if (!em.isJoinedToTransaction()) {
+            // Сообщает EntityManager'у, что транзакция
+            // JTA активна, и присоединяет к ней
+            // контекст хранения.
+            // Этот метод следует вызывать в диспетчере
+            // управляемых объектов приложения JTA,
+            // который был создан вне области действия
+            // активной транзакции, или в диспетчере сущностей
+            // типа SynchronizationType.UNSYNCHRONIZED,
+            // чтобы связать его с текущей транзакцией JTA.
+            em.joinTransaction();
+        }
+
+        tx.commit();
+        em.close();
+    }
+
+    @Test
+    void mergeWhenNotSyncStateEntityManager() throws HeuristicRollbackException, RollbackException, HeuristicMixedException, SystemException, NotSupportedException {
+        createdItem.setName("New Name");
+
+        final EntityManager em = JPA.createEntityManager();
+        final Item mergedItem = em.merge(createdItem);
+
+        final UserTransaction tx = TM.getUserTransaction();
+
+        tx.begin();
+        em.joinTransaction();
+        tx.commit();
+        em.close();
+    }
+
+    @Test
+    void removeWhenNotSyncStateEntityManager() throws HeuristicRollbackException, RollbackException, HeuristicMixedException, SystemException, NotSupportedException {
+        final EntityManager em = JPA.createEntityManager();
+
+        final Item item = em.find(Item.class, createdItem.getId());
+        em.remove(item);
+
+        final UserTransaction tx = TM.getUserTransaction();
+
+        tx.begin();
+        em.joinTransaction();
+        tx.commit();
         em.close();
     }
 }
