@@ -141,5 +141,4 @@ public class LazyProxyCollections extends JPATest {
         assertFalse(item.getBids().isEmpty());
         assertFalse(item.getBids().contains(new Bid(new BigDecimal(1))));
     }
-
 }
