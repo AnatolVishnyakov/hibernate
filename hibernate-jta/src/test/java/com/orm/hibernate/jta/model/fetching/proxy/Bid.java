@@ -1,4 +1,4 @@
-package com.orm.hibernate.jta.model.proxy;
+package com.orm.hibernate.jta.model.fetching.proxy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

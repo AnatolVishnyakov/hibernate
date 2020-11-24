@@ -31,10 +31,10 @@
 
     <persistence-unit name="FetchingProxyPU">
         <jta-data-source>myDS</jta-data-source>
-        <class>com.orm.hibernate.jta.model.proxy.Item</class>
-        <class>com.orm.hibernate.jta.model.proxy.Category</class>
-        <class>com.orm.hibernate.jta.model.proxy.Bid</class>
-        <class>com.orm.hibernate.jta.model.proxy.User</class>
+        <class>com.orm.hibernate.jta.model.fetching.proxy.Item</class>
+        <class>com.orm.hibernate.jta.model.fetching.proxy.Category</class>
+        <class>com.orm.hibernate.jta.model.fetching.proxy.Bid</class>
+        <class>com.orm.hibernate.jta.model.fetching.proxy.User</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>

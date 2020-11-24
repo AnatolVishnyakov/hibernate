@@ -1,9 +1,9 @@
 package com.orm.hibernate.jta.fetching;
 
 import com.orm.hibernate.jta.env.JPATest;
-import com.orm.hibernate.jta.model.proxy.Bid;
-import com.orm.hibernate.jta.model.proxy.Item;
-import com.orm.hibernate.jta.model.proxy.User;
+import com.orm.hibernate.jta.model.fetching.proxy.Bid;
+import com.orm.hibernate.jta.model.fetching.proxy.Item;
+import com.orm.hibernate.jta.model.fetching.proxy.User;
 import org.hibernate.Hibernate;
 import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.proxy.HibernateProxyHelper;
@@ -141,4 +141,5 @@ public class LazyProxyCollections extends JPATest {
         assertFalse(item.getBids().isEmpty());
         assertFalse(item.getBids().contains(new Bid(new BigDecimal(1))));
     }
+
 }
