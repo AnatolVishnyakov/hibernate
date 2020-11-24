@@ -5,6 +5,7 @@ import com.orm.hibernate.jta.model.proxy.Bid;
 import com.orm.hibernate.jta.model.proxy.Item;
 import com.orm.hibernate.jta.model.proxy.User;
 import org.hibernate.Hibernate;
+import org.hibernate.collection.internal.PersistentSet;
 import org.hibernate.proxy.HibernateProxyHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import javax.persistence.PersistenceUtil;
 import javax.transaction.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,6 +38,12 @@ public class LazyProxyCollections extends JPATest {
         em.persist(seller);
         createdItem = new Item("Original Name", new Date(), seller);
         em.persist(createdItem);
+
+        for (int i = 1; i <= 3; i++) {
+            Bid bid = new Bid(createdItem, seller, BigDecimal.valueOf(new Random().nextDouble()));
+            createdItem.getBids().add(bid);
+            em.persist(bid);
+        }
 
         tx.commit();
         em.close();
@@ -111,5 +118,27 @@ public class LazyProxyCollections extends JPATest {
         em.joinTransaction();
         tx.commit();
         em.close();
+    }
+
+    @Test
+    void loadLazyCollection() {
+        final EntityManager em = JPA.createEntityManager();
+        final Item item = em.find(Item.class, createdItem.getId());
+        final Set<Bid> bids = item.getBids();
+
+        final PersistenceUtil persistenceUtil = Persistence.getPersistenceUtil();
+        assertFalse(persistenceUtil.isLoaded(item, "bids"));
+        assertTrue(Set.class.isAssignableFrom(bids.getClass()));
+        assertNotEquals(bids.getClass(), HashSet.class);
+        assertEquals(bids.getClass(), PersistentSet.class);
+    }
+
+    @Test
+    void operationsLazyCollection() throws HeuristicRollbackException, RollbackException, HeuristicMixedException, SystemException, NotSupportedException {
+        final EntityManager em = JPA.createEntityManager();
+        final Item item = em.find(Item.class, createdItem.getId());
+        assertEquals(item.getBids().size(), 3);
+        assertFalse(item.getBids().isEmpty());
+        assertFalse(item.getBids().contains(new Bid(new BigDecimal(1))));
     }
 }
