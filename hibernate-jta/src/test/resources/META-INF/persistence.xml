@@ -83,4 +83,18 @@
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
+
+    <persistence-unit name="FetchingCartesianProductPU">
+        <jta-data-source>myDS</jta-data-source>
+        <class>com.orm.hibernate.jta.model.fetching.cartesianproduct.Item</class>
+        <class>com.orm.hibernate.jta.model.fetching.cartesianproduct.User</class>
+        <class>com.orm.hibernate.jta.model.fetching.cartesianproduct.Bid</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.max_fetch_depth" value="3"/>
+        </properties>
+    </persistence-unit>
 </persistence>
