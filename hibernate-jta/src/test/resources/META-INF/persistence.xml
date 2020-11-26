@@ -48,16 +48,17 @@
         </properties>
     </persistence-unit>
 
-    <persistence-unit name="FetchingInterceptionPU">
+    <persistence-unit name="FetchingEagerJoinPU">
         <jta-data-source>myDS</jta-data-source>
-        <class>com.orm.hibernate.jta.model.fetching.interception.Item</class>
-        <class>com.orm.hibernate.jta.model.fetching.interception.User</class>
+        <class>com.orm.hibernate.jta.model.fetching.eagerjoin.Item</class>
+        <class>com.orm.hibernate.jta.model.fetching.eagerjoin.User</class>
+        <class>com.orm.hibernate.jta.model.fetching.eagerjoin.Bid</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/hibernatelearn"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
-            <property name="javax.persistence.jdbc.password" value="qq@zxc%123"/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
