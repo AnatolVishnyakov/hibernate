@@ -111,4 +111,17 @@
 <!--            <property name="hibernate.batch_fetch_style" value="LEGACY"/>-->
         </properties>
     </persistence-unit>
+
+    <persistence-unit name="FetchingSubselectPU">
+        <jta-data-source>myDS</jta-data-source>
+        <class>com.orm.hibernate.jta.model.fetching.subselect.Item</class>
+        <class>com.orm.hibernate.jta.model.fetching.subselect.User</class>
+        <class>com.orm.hibernate.jta.model.fetching.subselect.Bid</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
 </persistence>
