@@ -144,4 +144,20 @@
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="FetchingFetchLoadGraphPU">
+        <jta-data-source>myDS</jta-data-source>
+        <class>com.orm.hibernate.jta.model.fetching.fetchloadgraph</class>
+        <class>com.orm.hibernate.jta.model.fetching.fetchloadgraph.Item</class>
+        <class>com.orm.hibernate.jta.model.fetching.fetchloadgraph.User</class>
+        <class>com.orm.hibernate.jta.model.fetching.fetchloadgraph.Bid</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property
+                    name="javax.persistence.schema-generation.database.action"
+                    value="update"/>
+        </properties>
+    </persistence-unit>
 </persistence>
