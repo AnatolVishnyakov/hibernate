@@ -16,7 +16,7 @@ public class Item {
             mappedBy = "item",
             cascade = {CascadeType.DETACH, CascadeType.MERGE}
     )
-    protected Set<Bid> bids = new HashSet<Bid>();
+    protected Set<Bid> bids = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SELLER_ID", nullable = false)
     @org.hibernate.annotations.Cascade(
@@ -59,7 +59,4 @@ public class Item {
     public void setSeller(User seller) {
         this.seller = seller;
     }
-
-
-    // ...
 }
