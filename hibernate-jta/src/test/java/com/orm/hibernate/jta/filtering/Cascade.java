@@ -1,9 +1,7 @@
 package com.orm.hibernate.jta.filtering;
 
 import com.orm.hibernate.jta.env.JPATest;
-import com.orm.hibernate.jta.model.filtering.cascade.Bid;
-import com.orm.hibernate.jta.model.filtering.cascade.Item;
-import com.orm.hibernate.jta.model.filtering.cascade.User;
+import com.orm.hibernate.jta.model.filtering.cascade.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +27,14 @@ public class Cascade extends JPATest {
         final EntityManager em = JPA.createEntityManager();
         final User seller = new User("JohnDoe");
         em.persist(seller);
+
+        final BillingDetails bankAccount = new BankAccount("John Doe", "test-bank-acc", "Deutche", "Master Card");
+        em.persist(bankAccount);
+        seller.getBillingDetails().add(bankAccount);
+
+        final BillingDetails creditCard = new CreditCard("John Doe", "2345234", "12", "25");
+        em.persist(creditCard);
+        seller.getBillingDetails().add(creditCard);
 
         createdItem = new Item("Original Name", seller);
         em.persist(createdItem);
@@ -78,5 +84,18 @@ public class Cascade extends JPATest {
 
         tx.commit();
         em.close();
+    }
+
+    @Test
+    void cascadeCollection() {
+        final EntityManager em = JPA.createEntityManager();
+        final User user = em.find(User.class, createdItem.getId());
+
+        Assertions.assertEquals(user.getBillingDetails().size(), 2);
+        for (BillingDetails bd : user.getBillingDetails()) {
+            Assertions.assertEquals(bd.getOwner(), "John Doe");
+        }
+
+        em.refresh(user);
     }
 }
