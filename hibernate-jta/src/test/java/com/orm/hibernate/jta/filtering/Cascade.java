@@ -11,6 +11,8 @@ import javax.transaction.*;
 import java.math.BigDecimal;
 import java.util.Random;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class Cascade extends JPATest {
     private Item createdItem;
 
@@ -52,7 +54,7 @@ public class Cascade extends JPATest {
     void cascadeDetach() {
         final EntityManager em = JPA.createEntityManager();
         final Item item = em.find(Item.class, createdItem.getId());
-        Assertions.assertEquals(item.getBids().size(), 2);
+        assertEquals(item.getBids().size(), 2);
 
         // если коллекция bids не будет загружена,
         // она не сможет стать отсоединенной
@@ -66,7 +68,7 @@ public class Cascade extends JPATest {
 
         final EntityManager em = JPA.createEntityManager();
         final Item item = em.find(Item.class, createdItem.getId());
-        Assertions.assertEquals(item.getBids().size(), 2);
+        assertEquals(item.getBids().size(), 2);
         em.detach(item);
 
         em.clear();
@@ -91,9 +93,22 @@ public class Cascade extends JPATest {
         final EntityManager em = JPA.createEntityManager();
         final User user = em.find(User.class, createdItem.getId());
 
-        Assertions.assertEquals(user.getBillingDetails().size(), 2);
+        assertEquals(user.getBillingDetails().size(), 2);
         for (BillingDetails bd : user.getBillingDetails()) {
-            Assertions.assertEquals(bd.getOwner(), "John Doe");
+            assertEquals(bd.getOwner(), "John Doe");
+        }
+
+        em.refresh(user);
+    }
+
+    @Test
+    void cascadeUpdate() {
+        final EntityManager em = JPA.createEntityManager();
+        final User user = em.find(User.class, createdItem.getId());
+        assertEquals(2, user.getBillingDetails().size()); // инициализация коллекции
+
+        for (BillingDetails bd : user.getBillingDetails()) {
+            assertEquals("Joe Doe", bd.getOwner());
         }
 
         em.refresh(user);
