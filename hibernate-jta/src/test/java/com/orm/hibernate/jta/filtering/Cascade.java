@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class Cascade extends JPATest {
     private Item createdItem;
@@ -112,5 +113,18 @@ public class Cascade extends JPATest {
         }
 
         em.refresh(user);
+    }
+
+    @Test
+    void cascadeReplicate() throws Exception {
+        UserTransaction tx = TM.getUserTransaction();
+        tx.begin();
+
+        final EntityManager em = JPA.createEntityManager();
+        final Item item = em.find(Item.class, createdItem.getId());
+        assertNotNull(item.getSeller().getUsername());
+
+        tx.commit();
+        em.close();
     }
 }

@@ -161,11 +161,9 @@
         </properties>
     </persistence-unit>
 
-<!--  Filtering  -->
+    <!--  Filtering  -->
     <persistence-unit name="FilteringCascadePU">
         <jta-data-source>myDS</jta-data-source>
-<!--        <mapping-file>filtering/DefaultCascadePersist.xml</mapping-file>-->
-        <class>com.orm.hibernate.jta.model</class>
         <class>com.orm.hibernate.jta.model.filtering.cascade.Item</class>
         <class>com.orm.hibernate.jta.model.filtering.cascade.Bid</class>
         <class>com.orm.hibernate.jta.model.filtering.cascade.User</class>
@@ -177,9 +175,6 @@
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property
-                    name="javax.persistence.schema-generation.database.action"
-                    value="update"/>
         </properties>
     </persistence-unit>
 </persistence>
