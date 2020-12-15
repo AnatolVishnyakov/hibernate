@@ -177,4 +177,16 @@
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="FilteringCallbackPU">
+        <jta-data-source>myDS</jta-data-source>
+        <mapping-file>filtering/EventListeners.xml</mapping-file>
+        <class>com.orm.hibernate.jta.model.filtering.callback.Item</class>
+        <class>com.orm.hibernate.jta.model.filtering.callback.User</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
 </persistence>
