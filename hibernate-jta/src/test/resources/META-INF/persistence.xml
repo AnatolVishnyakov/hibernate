@@ -189,4 +189,15 @@
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="FilteringInterceptorPU">
+        <jta-data-source>myDS</jta-data-source>
+        <class>com.orm.hibernate.jta.model.filtering.interceptor.Item</class>
+        <class>com.orm.hibernate.jta.model.filtering.interceptor.User</class>
+        <class>com.orm.hibernate.jta.model.filtering.interceptor.AuditLogRecord</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.ejb.event.load"
+                      value="com.orm.hibernate.jta.filtering.SecurityLoadListener"/>
+        </properties>
+    </persistence-unit>
 </persistence>
