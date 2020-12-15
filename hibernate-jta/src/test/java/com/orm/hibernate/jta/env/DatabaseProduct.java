@@ -16,7 +16,7 @@ public enum DatabaseProduct {
                 ds.getDriverProperties().put("user", "postgres");
                 ds.getDriverProperties().put("password", "qq@zxc%123");
             },
-        org.hibernate.dialect.PostgreSQL82Dialect.class.getName()
+        org.hibernate.dialect.PostgreSQL10Dialect.class.getName()
     );
 
     public DataSourceConfiguration configuration;
