@@ -78,11 +78,10 @@ public class Envers extends JPATest {
         }
         Date TIMESTAMP_DELETE = new Date();
 
+        final EntityManager em = JPA.createEntityManager();
+        AuditReader auditReader = AuditReaderFactory.get(em);
         {
             // search
-            final EntityManager em = JPA.createEntityManager();
-
-            AuditReader auditReader = AuditReaderFactory.get(em);
             final Number revCreate = auditReader.getRevisionNumberForDate(TIMESTAMP_CREATE);
             final Number revUpdate = auditReader.getRevisionNumberForDate(TIMESTAMP_UPDATE);
             final Number revDelete = auditReader.getRevisionNumberForDate(TIMESTAMP_DELETE);
@@ -97,14 +96,9 @@ public class Envers extends JPATest {
 
             final List<Number> userRevisions = auditReader.getRevisions(User.class, USER_ID);
             assertEquals(userRevisions.size(), 2);
-        }
 
-        {
-            final EntityManager em = JPA.createEntityManager();
-
-            AuditReader auditReader = AuditReaderFactory.get(em);
             final AuditQuery query = auditReader.createQuery()
-                    .forRevisionsOfEntity(Item.class, false, true);
+                    .forRevisionsOfEntity(Item.class, false, false);
 
             final List<Object[]> result = query.getResultList();
             for (Object[] tuple : result) {
@@ -123,6 +117,21 @@ public class Envers extends JPATest {
                     assertNull(item);
                 }
             }
+
+            // get archive
+            final Item createdItem = auditReader.find(Item.class, ITEM_ID, revCreate);
+            assertEquals("Foo", createdItem.getName());
+            assertEquals("johndoe", createdItem.getSeller().getUsername());
+
+            final Item updatedItem = auditReader.find(Item.class, ITEM_ID, revUpdate);
+            assertEquals("Bar", updatedItem.getName());
+            assertEquals("doejohn", updatedItem.getSeller().getUsername());
+
+            final Item deletedItem = auditReader.find(Item.class, ITEM_ID, revDelete);
+            assertNull(deletedItem);
+
+            final User user = auditReader.find(User.class, USER_ID, revDelete);
+            assertEquals("doejohn", user.getUsername());
         }
     }
 }
