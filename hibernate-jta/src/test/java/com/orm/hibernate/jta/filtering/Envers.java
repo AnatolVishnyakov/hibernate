@@ -3,10 +3,20 @@ package com.orm.hibernate.jta.filtering;
 import com.orm.hibernate.jta.env.JPATest;
 import com.orm.hibernate.jta.model.filtering.envers.Item;
 import com.orm.hibernate.jta.model.filtering.envers.User;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.DefaultRevisionEntity;
+import org.hibernate.envers.RevisionType;
+import org.hibernate.envers.query.AuditQuery;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
 import javax.transaction.*;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class Envers extends JPATest {
     @Override
@@ -30,7 +40,7 @@ public class Envers extends JPATest {
             final User user = new User("johndoe");
             em.persist(user);
 
-            final Item item = new Item("test", user);
+            final Item item = new Item("Foo", user);
             em.persist(item);
 
             tx.commit();
@@ -39,6 +49,7 @@ public class Envers extends JPATest {
             ITEM_ID = item.getId();
             USER_ID = user.getId();
         }
+        Date TIMESTAMP_CREATE = new Date();
 
         {
             // update
@@ -52,6 +63,7 @@ public class Envers extends JPATest {
             tx.commit();
             em.close();
         }
+        Date TIMESTAMP_UPDATE = new Date();
 
         {
             // delete
@@ -63,6 +75,54 @@ public class Envers extends JPATest {
 
             tx.commit();
             em.close();
+        }
+        Date TIMESTAMP_DELETE = new Date();
+
+        {
+            // search
+            final EntityManager em = JPA.createEntityManager();
+
+            AuditReader auditReader = AuditReaderFactory.get(em);
+            final Number revCreate = auditReader.getRevisionNumberForDate(TIMESTAMP_CREATE);
+            final Number revUpdate = auditReader.getRevisionNumberForDate(TIMESTAMP_UPDATE);
+            final Number revDelete = auditReader.getRevisionNumberForDate(TIMESTAMP_DELETE);
+
+            final List<Number> itemRevisions = auditReader.getRevisions(Item.class, ITEM_ID);
+            assertEquals(itemRevisions.size(), 3);
+
+            for (Number itemRevision : itemRevisions) {
+                final Date revisionDate = auditReader.getRevisionDate(itemRevision);
+                System.out.println(itemRevision + " : " + revisionDate);
+            }
+
+            final List<Number> userRevisions = auditReader.getRevisions(User.class, USER_ID);
+            assertEquals(userRevisions.size(), 2);
+        }
+
+        {
+            final EntityManager em = JPA.createEntityManager();
+
+            AuditReader auditReader = AuditReaderFactory.get(em);
+            final AuditQuery query = auditReader.createQuery()
+                    .forRevisionsOfEntity(Item.class, false, true);
+
+            final List<Object[]> result = query.getResultList();
+            for (Object[] tuple : result) {
+                final Item item = (Item) tuple[0];
+                final DefaultRevisionEntity revision = (DefaultRevisionEntity) tuple[1];
+                final RevisionType revisionType = (RevisionType) tuple[2];
+
+                if (revision.getId() == 3) {
+                    assertEquals(RevisionType.ADD, revisionType);
+                    assertEquals("Foo", item.getName());
+                } else if (revision.getId() == 2) {
+                    assertEquals(RevisionType.MOD, revisionType);
+                    assertEquals("Bar", item.getName());
+                } else if (revision.getId() == 1) {
+                    assertEquals(RevisionType.DEL, revisionType);
+                    assertNull(item);
+                }
+            }
         }
     }
 }
