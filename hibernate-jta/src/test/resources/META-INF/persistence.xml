@@ -212,4 +212,18 @@
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
+
+    <persistence-unit name="FilteringDynamicPU">
+        <jta-data-source>myDS</jta-data-source>
+        <class>com.orm.hibernate.jta.model.filtering.dynamic</class>
+        <class>com.orm.hibernate.jta.model.filtering.dynamic.User</class>
+        <class>com.orm.hibernate.jta.model.filtering.dynamic.Item</class>
+        <class>com.orm.hibernate.jta.model.filtering.dynamic.Category</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
 </persistence>
