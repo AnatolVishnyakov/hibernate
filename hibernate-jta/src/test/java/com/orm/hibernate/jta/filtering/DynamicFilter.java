@@ -1,17 +1,19 @@
 package com.orm.hibernate.jta.filtering;
 
 import com.orm.hibernate.jta.env.JPATest;
-import com.orm.hibernate.jta.model.filtering.dynamic.*;
+import com.orm.hibernate.jta.model.filtering.dynamic.Category;
+import com.orm.hibernate.jta.model.filtering.dynamic.Item;
+import com.orm.hibernate.jta.model.filtering.dynamic.User;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.*;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,6 +66,17 @@ public class DynamicFilter extends JPATest {
                 // select * from ITEM where 0 >=
                 //  (select u.RANK from USERS u  where u.ID = SELLER_ID)
                 assertEquals(1, items.size());
+            }
+            em.clear();
+
+            {
+                CriteriaBuilder cb = em.getCriteriaBuilder();
+                CriteriaQuery<Item> criteria = cb.createQuery(Item.class);
+                criteria.select(criteria.from(Item.class));
+                List<Item> items = em.createQuery(criteria).getResultList();
+                // select * from ITEM where 0 >=
+                //  (select u.RANK from USERS u  where u.ID = SELLER_ID)
+                assertEquals(items.size(), 1);
             }
             em.clear();
         }
