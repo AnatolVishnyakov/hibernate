@@ -39,8 +39,9 @@ public class DynamicFilter extends JPATest {
         User seller = new User("user-" + UUID.randomUUID().toString(), 110);
         em.persist(seller);
 
-        final Item item = new Item("test", category, seller);
-        em.persist(item);
+        createdItem = new Item("test", category, seller);
+        category.getItems().add(createdItem);
+        em.persist(createdItem);
 
         User seller2 = new User("user-" + UUID.randomUUID().toString(), 10);
         em.persist(seller2);
@@ -79,6 +80,27 @@ public class DynamicFilter extends JPATest {
                 assertEquals(items.size(), 1);
             }
             em.clear();
+        }
+    }
+
+    @Test
+    void filterCollection() {
+        final EntityManager em = JPA.createEntityManager();
+        final Long categoryId = 1L;
+
+        {
+            org.hibernate.Filter filter = em.unwrap(Session.class)
+                    .enableFilter("limitByUserRank");
+
+            filter.setParameter("currentUserRank", 0);
+            Category category = em.find(Category.class, categoryId);
+            assertEquals(category.getItems().size(), 1);
+
+            em.clear();
+
+            filter.setParameter("currentUserRank", 100);
+            category = em.find(Category.class, categoryId);
+            assertEquals(category.getItems().size(), 2);
         }
     }
 }
