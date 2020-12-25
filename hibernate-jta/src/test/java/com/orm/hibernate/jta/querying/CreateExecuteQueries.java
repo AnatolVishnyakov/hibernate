@@ -1,6 +1,7 @@
 package com.orm.hibernate.jta.querying;
 
 import com.orm.hibernate.jta.model.querying.Item;
+import org.hibernate.Session;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.UserTransaction;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -109,6 +111,58 @@ public class CreateExecuteQueries extends QueryingTest {
             Item result = query.getSingleResult();
 
             assertEquals(result.getId(), ITEM_ID);
+        }
+
+        tx.commit();
+        em.close();
+    }
+
+    @Test
+    public void createHibernateQueries() throws Exception {
+        TestDataCategoriesItems testData = storeTestData();
+        Long ITEM_ID = testData.items.getFirstId();
+
+        UserTransaction tx = TM.getUserTransaction();
+        tx.begin();
+        EntityManager em = JPA.createEntityManager();
+
+        {
+            Session session = em.unwrap(Session.class);
+            org.hibernate.Query query = session.createQuery("select i from Item i");
+            // Проприетарный API: query.setResultTransformer(...);
+
+            assertEquals(query.list().size(), 3);
+        }
+        {
+            Session session = em.unwrap(Session.class);
+
+            org.hibernate.SQLQuery query = session.createSQLQuery(
+                    "select {i.*} from ITEM {i}"
+            ).addEntity("i", Item.class);
+
+            assertEquals(query.list().size(), 3);
+        }
+        {
+            Session session = em.unwrap(Session.class);
+
+            org.hibernate.Criteria query = session.createCriteria(Item.class);
+            query.add(org.hibernate.criterion.Restrictions.eq("id", ITEM_ID));
+
+            Item result = (Item) query.uniqueResult();
+
+            assertEquals(result.getId(), ITEM_ID);
+        }
+        {
+            javax.persistence.Query query = em.createQuery(
+                    "select i from Item i"
+            );
+
+            org.hibernate.Query hibernateQuery =
+                    query.unwrap(org.hibernate.jpa.HibernateQuery.class)
+                            .getHibernateQuery();
+
+            hibernateQuery.getQueryString();
+            hibernateQuery.getReturnAliases();
         }
 
         tx.commit();
