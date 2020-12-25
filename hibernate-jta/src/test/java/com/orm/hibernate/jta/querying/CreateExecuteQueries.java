@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -167,5 +168,38 @@ public class CreateExecuteQueries extends QueryingTest {
 
         tx.commit();
         em.close();
+    }
+
+    protected String getValueEnteredByUser() {
+        // foo' and callSomeStoredProcedure() and 'bar' = 'bar"?
+        return "ALWAYS FILTER VALUES ENTERED BY USERS!";
+    }
+
+    @Test
+    public void parameterBinding() throws Exception {
+        TestDataCategoriesItems testData = storeTestData();
+
+        UserTransaction tx = TM.getUserTransaction();
+        try {
+            tx.begin();
+            EntityManager em = JPA.createEntityManager();
+
+            List<Item> items;
+            {
+                // SQL injection
+                String searchString = getValueEnteredByUser();
+
+                Query query = em.createQuery(
+                        "select i from Item i where i.name = '" + searchString + "'"
+                );
+                items = query.getResultList();
+                assertEquals(items.size(), 0);
+            }
+
+            tx.commit();
+            em.close();
+        } finally {
+            TM.rollback();
+        }
     }
 }
