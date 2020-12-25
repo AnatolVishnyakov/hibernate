@@ -226,4 +226,26 @@
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
+
+    <persistence-unit name="QueryingPU">
+        <jta-data-source>myDS</jta-data-source>
+        <class>com.orm.hibernate.jta.model.querying</class>
+        <class>com.orm.hibernate.jta.model.querying.Category</class>
+        <class>com.orm.hibernate.jta.model.querying.Item</class>
+        <class>com.orm.hibernate.jta.model.querying.Bid</class>
+        <class>com.orm.hibernate.jta.model.querying.Image</class>
+        <class>com.orm.hibernate.jta.model.querying.User</class>
+        <class>com.orm.hibernate.jta.model.querying.Address</class>
+        <class>com.orm.hibernate.jta.model.querying.LogRecord</class>
+        <class>com.orm.hibernate.jta.model.inheritance.tableperclass.BillingDetails</class>
+        <class>com.orm.hibernate.jta.model.inheritance.tableperclass.CreditCard</class>
+        <class>com.orm.hibernate.jta.model.inheritance.tableperclass.BankAccount</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.order_by.default_null_ordering" value="first"/>
+        </properties>
+    </persistence-unit>
 </persistence>
