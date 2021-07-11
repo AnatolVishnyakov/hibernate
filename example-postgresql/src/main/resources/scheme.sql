@@ -1,5 +1,7 @@
 create database sandbox;
 
+drop table if exists toys;
+
 create table toys
 (
     id    serial  not null,
